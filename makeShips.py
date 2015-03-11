@@ -1,18 +1,30 @@
-__author__ = 'Laurence'
+#!/opt/local/bin/python3
 
+from PyQt4 import QtGui, QtCore
+import sys
 """
 This function places the ships on the board of the user
 """
+class Test(QtGui.QWidget):
+    def __init__(self):
+        """creert interface en unigrammen"""
+        super(Test,self).__init__()
+        self.initUI()
 
+    def initUI(self):
+        self.setGeometry(300, 300, 300, 500)
+        self.setWindowTitle("Unigrammen")
+        self.show
 
 def userPlaceShips(board, ships):
-    for ship in ships:  # lijst of dic ofzo? wat zijn de schepen?
+    for ship in ships.keys() #schepen moeten dus dictionairy zijn
 
-        # get coordinates from the user and validate if position is correct
-        valid = False
+        valid = False  #initaliseer waarde, aangeroepen met andere functie
         while (not valid):
-    # Laat zien dat je schip kan plaatsen dmv van popup oid
-    # verififeer waar de gebruiker heeft geklikt met x & y, roep hier functie getCoords aan met userinput
+            # Mouseevent en haal hier de x & y uit en geef deze weer aan de getCoords functie
+
+            # Laat zien dat je een schip kan plaatsen dmv van een qlabel ofzo?
+
     # vraag ook aan de gebruiker of het schip horizontaal of verticaal moet worden geplaatst
     # kijk of dit schip past: validate functie aanroepen met parameters
     # als het niet past, laat nieuwe popup met foutmeldingen zien
@@ -20,7 +32,6 @@ def userPlaceShips(board, ships):
     #plaats het schip, roep hiervoor de functie plaats schip aan met parameters vled, schip, orientatie & coordinaten
 
     # return ingevoerde coordinaten in het speelveld
-
 
 def getCoords(userinput):
     # see that user entered 2 values seprated by comma
@@ -37,6 +48,16 @@ def getCoords(userinput):
        # laat hier ook weten dat je getallen binnen de 1 en 10 moet invoeren
 
     #klopt alles, geef dan coordinaten terug (joepie!)
-    return coor
+    return coord
 
+def mouseEvent(self, QMouseEvent):
+        cursor =QtGui.QCursor()
+        position= cursor.pos()
+        return position
+
+if __name__ == '__main__':
+    app=QtGui.QApplication(sys.argv)
+    interface=Test()
+    interface.show()
+    app.exec_()
 
