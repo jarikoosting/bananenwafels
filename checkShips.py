@@ -9,7 +9,7 @@ def checkShips():
     After placement, if the user clicks, it goes to this function!
     """
     coords = {"Aircraft Carrier":[(9,2),(9,3),(9,4),(9,5)], "Battleship":[(1,1)]}
-    click = (1,1)
+    click = (9,10)
 
     # Loop through dictionary with ships and coords
     for ship, coord in coords.items():
@@ -17,13 +17,13 @@ def checkShips():
             if click == el:
                 coord.remove(el)
 
-                shipHit = True
-
                 # Check if ship is destroyed after the hit
                 checkDestroyed(coords)
 
+                return True
+
     # None of the ships got a hit!
-    shipHit = False
+    return False
 
 def checkDestroyed(coords):
     """
