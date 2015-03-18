@@ -127,7 +127,7 @@ class Battleships(QtGui.QWidget):
         After placement, if the user clicks, it goes to this function!
         """
         coords = {"Aircraft Carrier":[(9,2),(9,3),(9,4),(9,5)], "Battleship":[(1,1)]}
-        click = (1,1)
+        click = (9,10)
 
         # Loop through dictionary with ships and coords
         for ship, coord in coords.items():
@@ -135,15 +135,12 @@ class Battleships(QtGui.QWidget):
                 if click == el:
                     coord.remove(el)
 
-                    # GIVES ERROR -> SELF.SHIPHIT GIVE TRUE IF SHIP IS HIT
-                    #self.shipHit = True
-
                     # Check if ship is destroyed after the hit
                     Battleships.checkDestroyed(self,coords)
+                    return True
 
         # None of the ships got a hit!
-        # GIVES ALSO AN ERROR, HAS TO BE FIXED!
-        #self.shipHit = False
+        return False
 
     def checkDestroyed(self,coords):
         """
@@ -160,9 +157,11 @@ class Battleships(QtGui.QWidget):
 
 if __name__ == '__main__':
     app = QtGui.QApplication(sys.argv)
-    game = Battleships()
-    game.show()
-    app.exec_()
+    #game = Battleships()
+    #game.show()
+    #app.exec_()
+
+    Battleships.checkShips(sys.argv)
 
 
 
