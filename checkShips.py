@@ -3,7 +3,7 @@
 # Check if a ship got a hit
 
 
-def checkShips(destroyDict):
+def checkShips():
     """
     Check if a ship has been hit
     After placement, if the user clicks, it goes to this function!
