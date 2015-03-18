@@ -157,11 +157,9 @@ class Battleships(QtGui.QWidget):
 
 if __name__ == '__main__':
     app = QtGui.QApplication(sys.argv)
-    #game = Battleships()
-    #game.show()
-    #app.exec_()
-
-    Battleships.checkShips(sys.argv)
+    game = Battleships()
+    game.show()
+    app.exec_()
 
 
 
