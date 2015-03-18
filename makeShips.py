@@ -97,10 +97,6 @@ class Battleships(QtGui.QWidget):
 
         return self.lijst
 
-    def checkBoundries(self):
-
-        # JARIK
-
     def checkShips(self):
         """
         Check if a ship has been hit
@@ -139,10 +135,10 @@ class Battleships(QtGui.QWidget):
         return False
 
 if __name__ == '__main__':
-    #app = QtGui.QApplication(sys.argv)
-    Battleships.checkShips(sys.argv)
-    #game.show()
-    #app.exec_()
+    app = QtGui.QApplication(sys.argv)
+    game = Battleships()
+    game.show()
+    app.exec_()
 
 
 
