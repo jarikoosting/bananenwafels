@@ -97,11 +97,52 @@ class Battleships(QtGui.QWidget):
 
         return self.lijst
 
+    def checkBoundries(self):
+
+        # JARIK
+
+    def checkShips(self):
+        """
+        Check if a ship has been hit
+        After placement, if the user clicks, it goes to this function!
+        """
+        coords = {"Aircraft Carrier":[(9,2),(9,3),(9,4),(9,5)], "Battleship":[(1,1)]}
+        click = (1,1)
+
+        # Loop through dictionary with ships and coords
+        for ship, coord in coords.items():
+            for el in coord:
+                if click == el:
+                    coord.remove(el)
+
+                    # GIVES ERROR -> SELF.SHIPHIT GIVE TRUE IF SHIP IS HIT
+                    #self.shipHit = True
+
+                    # Check if ship is destroyed after the hit
+                    Battleships.checkDestroyed(self,coords)
+
+        # None of the ships got a hit!
+        # GIVES ALSO AN ERROR, HAS TO BE FIXED!
+        #self.shipHit = False
+
+    def checkDestroyed(self,coords):
+        """
+        Check if a ship is destroyed
+        """
+
+        # Return True when ship is destroyed
+        for ship, coord in coords.items():
+            if coords.get(ship) == []:
+                return ship, True
+
+        # None of the ships are destroyed
+        return False
+
 if __name__ == '__main__':
-    app = QtGui.QApplication(sys.argv)
-    game = Battleships()
-    game.show()
-    app.exec_()
+    #app = QtGui.QApplication(sys.argv)
+    Battleships.checkShips(sys.argv)
+    #game.show()
+    #app.exec_()
 
 
 
