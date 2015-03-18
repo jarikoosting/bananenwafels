@@ -26,10 +26,6 @@ class Battleships(QtGui.QWidget):
 
         self.botendic= {"Aircraft Carrier":5,"Battleship":4,"Submarine":3,"Destroyer":3,"Patrol Boat":2}
 
-        lengteschepen=list(self.botendic.values())
-        lengteschepen.sort()
-        lengteschip=lengteschepen.pop()
-
         self.richting=QtGui.QPushButton('Horizontaal',self)
         self.richting.move(10,10)
         self.richting.setCheckable(True)
@@ -38,14 +34,22 @@ class Battleships(QtGui.QWidget):
         self.setship=QtGui.QPushButton('Plaats schip!',self)
         self.setship.move(100,10)
         self.setship.clicked.connect(self.setShips)
-
+        lengteschip=int(3)
         self.btnsDict = {}
         for row in range(10):
             for column in range(10):
                 coord = str(row)+"."+str(column)
                 self.btnsDict[coord] = QtGui.QPushButton(str(row) + ":" + str(column))
+                # andere functie maken om te checken of alle boten zijn aangeklikt, en als er geen 5 elementen zijn
+                # dan dit zeggen en als ze er wel zijn pas naar makeShips gaan.
                 self.btnsDict[coord].clicked.connect(lambda c, x=row, y=column: self.makeShips(x, y,lengteschip))
                 self.grid.addWidget(self.btnsDict[coord], row, column)
+
+        #dus eigenlijk een grote loop maken met alle waardes die ik nu krijg, hoe doe je dat?
+        lengteschepen=list(self.botendic.values())
+        lengteschepen.sort()
+        #for lengteschip in lengteschepen:
+            #self.makeShips(x,y,lengteschip)
 
         self.show()
 
@@ -58,7 +62,6 @@ class Battleships(QtGui.QWidget):
         kolom=y
         richting=self.richting
         self.startship=(x,y)
-
 
         print("lengte schip is", lengteschip, "blokjes")
 
@@ -86,16 +89,37 @@ class Battleships(QtGui.QWidget):
             self.richting="verticaal"
 
     def setShips(self):
+        #deze functie aanroepen als alles al is geplaatst
         # Dan dus de coordinaten in een dictionairy: schip en dan coordinaten met lijst erachter.
         self.lijstships=[]
         self.lijstships.append(self.startship)
         self.lijstships.append(self.endship)
+        print("de coordinaat van het geplaatste schip is ",self.lijstships)
 
-        self.lijst=[]
-        self.lijst.append(self.lijstships)
-        print(self.lijst)
+        coords={}
 
-        return self.lijst
+        coords = {"Aircraft Carrier":[(9,2),(9,3),(9,4),(9,5)], "Battleship":[(1,1)]}
+        for ship in self.botendic:
+            coords[ship]=self.lijstships
+        print(coords)
+
+        return coords
+
+    #def validate(self,board,ship,x,y,ori):3
+    #validate the ship can be placed at given coordinates
+    #if ori == "v" and x+ship > 10:
+        #return False
+    #elif ori == "h" and y+ship > 10:
+        #return False
+    #else:
+        #if ori == "v":
+            #for i in range(ship):
+              #if board[x+i][y] != -1:
+                    #return False
+        #elif ori == "h":
+            #for i in range(ship):
+                #if board[x][y+i] != -1:
+                    #return False
 
 if __name__ == '__main__':
     app = QtGui.QApplication(sys.argv)
