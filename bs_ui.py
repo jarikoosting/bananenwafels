@@ -30,13 +30,22 @@ class Battleships(QtGui.QWidget):
             for column in range(10):
                 coord = str(row)+"."+str(column)
                 self.btnsDict[coord] = QtGui.QPushButton(str(row) + ":" + str(column))
-                self.btnsDict[coord].clicked.connect(lambda c, x=row, y=column: self.yeah(x, y))
+                self.btnsDict[coord].setStyleSheet('QPushButton {background-color: white; color: black; width: 60px;'
+                                                   'height: 60px;}')
+                self.btnsDict[coord].clicked.connect(lambda c, x=row, y=column, btn=coord: self.btnPressed(x, y, btn))
                 self.grid.addWidget(self.btnsDict[coord], row, column)
 
         self.show()
 
-    def yeah(self, x ,y):
+    def btnPressed(self, x, y, b):
         print(x, y)
+        if b == "0.0" or b == "6.6":
+            self.btnsDict[b].setStyleSheet('QPushButton {background-color: red; color: black; width: 60px;'
+                                           'height: 60px;}')
+            self.infoLabel.setText("hit a ship")
+        else:
+            self.btnsDict[b].setStyleSheet('QPushButton {background-color: blue; color: black; width: 60px;'
+                                           'height: 60px;}')
 
 
 def main():
