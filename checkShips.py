@@ -8,8 +8,8 @@ def checkShips(destroyDict):
     Check if a ship has been hit
     After placement, if the user clicks, it goes to this function!
     """
-    coords = {"Aircraft Carrier":[(9,2),(9,3),(9,4),(9,5)], "Battleship":[(1,1),(2,2)]}
-    click = (9,3)
+    coords = {"Aircraft Carrier":[(9,2),(9,3),(9,4),(9,5)], "Battleship":[(1,1)]}
+    click = (1,1)
 
     # Loop through dictionary with ships and coords
     for ship, coord in coords.items():
@@ -20,20 +20,22 @@ def checkShips(destroyDict):
                 shipHit = True
 
                 # Check if ship is destroyed after the hit
-                checkDestroyed()
+                checkDestroyed(coords)
 
-            else:
-                shipHit = False
+    # None of the ships got a hit!
+    shipHit = False
 
-def checkDestroyed():
+def checkDestroyed(coords):
     """
     Check if a ship is destroyed
     """
 
     # Return True when ship is destroyed
+    for ship, coord in coords.items():
+        if coords.get(ship) == []:
+            return True
 
-    print("Hoi")
-
+    return False
 
 if __name__ == "__main__":
     destroyDict = {}
