@@ -33,10 +33,10 @@ def checkDestroyed(coords):
     # Return True when ship is destroyed
     for ship, coord in coords.items():
         if coords.get(ship) == []:
-            return True
+            return ship, True
 
+    # None of the ships are destroyed
     return False
 
 if __name__ == "__main__":
-    destroyDict = {}
-    checkShips(destroyDict)
+    checkShips()
