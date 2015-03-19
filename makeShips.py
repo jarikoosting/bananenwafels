@@ -123,7 +123,9 @@ class Battleships(QtGui.QWidget):
             self.shipDirection = "Vertical"
 
     def checkBoundaries(self):
-
+        """
+        Check of a ship is placed within the board
+        """
         if self.shipDirection == "Horizontal" and self.lenShips + self.row > 10:
             return False
         elif self.shipDirection == "Vertical" and self.lenShips + self.column > 10:
