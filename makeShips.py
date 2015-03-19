@@ -27,54 +27,85 @@ class Battleships(QtGui.QWidget):
         self.botendic= {"Aircraft Carrier":5,"Battleship":4,"Submarine":3,"Destroyer":3,"Patrol Boat":2}
 
         self.richting=QtGui.QPushButton('Horizontaal',self)
-        self.richting.move(10,10)
+        self.richting.move(100,0)
         self.richting.setCheckable(True)
         self.richting.clicked.connect(self.direction)
 
+        #for lengteschip in lengteschepen:
+            #self.makeShips(lengteschip)
+
         self.setship=QtGui.QPushButton('Plaats schip!',self)
-        self.setship.move(100,10)
-        self.setship.clicked.connect(self.setShips)
-        lengteschip=int(3)
+        self.setship.move(200,0)
+        self.setship.clicked.connect(self.makeShip)
+
+        self.setship=QtGui.QPushButton("Plaats alles!",self)
+        self.setship.move(300,0)
+        self.setship.clicked.connect(self.setAllShips)
+
+
         self.btnsDict = {}
         for row in range(10):
             for column in range(10):
                 coord = str(row)+"."+str(column)
                 self.btnsDict[coord] = QtGui.QPushButton(str(row) + ":" + str(column))
-                # andere functie maken om te checken of alle boten zijn aangeklikt, en als er geen 5 elementen zijn
-                # dan dit zeggen en als ze er wel zijn pas naar makeShips gaan.
-                self.btnsDict[coord].clicked.connect(lambda c, x=row, y=column: self.makeShips(x, y,lengteschip))
+                self.btnsDict[coord].setStyleSheet('QPushButton {background-color: white; color: black; width: 60px;'
+                                                   'height: 60px;}')
+                self.btnsDict[coord].clicked.connect(lambda c, x=row, y=column, btn=coord: self.btnPressed(x, y, btn))
                 self.grid.addWidget(self.btnsDict[coord], row, column)
-
-        #dus eigenlijk een grote loop maken met alle waardes die ik nu krijg, hoe doe je dat?
-        lengteschepen=list(self.botendic.values())
-        lengteschepen.sort()
-        #for lengteschip in lengteschepen:
-            #self.makeShips(x,y,lengteschip)
 
         self.show()
 
-    def makeShips(self,x,y,lengteschip):
+    def btnPressed(self, x, y, b):
+        self.rij=x
+        self.kolom=y
+        if b == "0.0" or b == "6.6":
+            self.btnsDict[b].setStyleSheet('QPushButton {background-color: red; color: black; width: 60px;'
+                                           'height: 60px;}')
+            self.infoLabel.setText("hit a ship")
+        else:
+            self.btnsDict[b].setStyleSheet('QPushButton {background-color: blue; color: black; width: 60px;'
+                                           'height: 60px;}')
+
+    def createShip(self):
+        self.lengteschepen=list(self.botendic.values())
+        self.lengteschepen.sort()
+        lengteschip=self.lengteschepen.pop()
+        self.makeShip(lengteschip)
+        return lengteschip
+
+    def makeShip(self,lengteschip):
         """
         this function creates the ships and gives a list of coordinates back of where the 5 ships are
         """
         #initialisatie van de waarden
-        rij=x
-        kolom=y
+
         richting=self.richting
-        self.startship=(x,y)
+        self.startship=(self.rij, self.kolom)
 
         print("lengte schip is", lengteschip, "blokjes")
 
+        #richting schip
         if richting == "horizontaal":
-            rij=rij+(lengteschip)
+            self.rij=self.rij+(lengteschip)
 
         else:
-            kolom=kolom+(lengteschip)
+            self.kolom=self.kolom+(lengteschip)
 
-        self.endship=(rij,kolom)
+        self.endship=(self.rij,self.kolom)
 
-        # coordinaten van het hele schip uitrekenen, in een for loop
+        self.lijstships=[]
+        self.lijstships.append(self.startship)
+        self.lijstships.append(self.endship)
 
+    def setAllShips(self):
+        coords={}
+
+        #coords = {"Aircraft Carrier":[(9,2),(9,3),(9,4),(9,5)], "Battleship":[(1,1)]}
+        for ship in self.botendic:
+            coords[ship]=self.lijstships
+        print(coords)
+
+        return coords
 
     def direction(self,pressed):
         """
@@ -87,23 +118,6 @@ class Battleships(QtGui.QWidget):
         else:
             source.setText("verticaal")
             self.richting="verticaal"
-
-    def setShips(self):
-        #deze functie aanroepen als alles al is geplaatst
-        # Dan dus de coordinaten in een dictionairy: schip en dan coordinaten met lijst erachter.
-        self.lijstships=[]
-        self.lijstships.append(self.startship)
-        self.lijstships.append(self.endship)
-        print("de coordinaat van het geplaatste schip is ",self.lijstships)
-
-        coords={}
-
-        coords = {"Aircraft Carrier":[(9,2),(9,3),(9,4),(9,5)], "Battleship":[(1,1)]}
-        for ship in self.botendic:
-            coords[ship]=self.lijstships
-        print(coords)
-
-        return coords
 
     #def validate(self,board,ship,x,y,ori):3
     #validate the ship can be placed at given coordinates
@@ -160,8 +174,3 @@ if __name__ == '__main__':
     game = Battleships()
     game.show()
     app.exec_()
-
-
-
-
-
