@@ -1,4 +1,4 @@
-#!/opt/local/bin/python3
+#!/opt/local/bin/python3.4
 
 from PyQt4 import QtGui, QtCore
 import sys
@@ -24,84 +24,85 @@ class Battleships(QtGui.QWidget):
         self.grid = QtGui.QGridLayout()
         self.setLayout(self.grid)
 
-        self.botendic= {"Aircraft Carrier":5,"Battleship":4,"Submarine":3,"Destroyer":3,"Patrol Boat":2}
+        self.botendic = {"Aircraft Carrier": 5, "Battleship": 4, "Submarine": 3, "Destroyer": 3, "Patrol Boat": 2}
 
-        self.richting=QtGui.QPushButton('Horizontaal',self)
-        self.richting.move(100,0)
-        self.richting.setCheckable(True)
-        self.richting.clicked.connect(self.direction)
+        # Create buttons for playing game
+        self.placeBtn = QtGui.QPushButton('Place Ship!', self)
+        self.placeBtn.setStyleSheet('QPushButton {background-color: orange; margin: 0; height: 30px; width: 150px;}')
+
+        self.directionBtn = QtGui.QPushButton('Horizontal!', self)
+        self.directionBtn.setStyleSheet('QPushButton {background-color: orange; margin: 0; height: 30px; width: 150px;}')
+        self.directionBtn.clicked.connect(self.direction)
+        self.shipDirection = "Horizontal"
+
+        self.placeAllBtn = QtGui.QPushButton('Submit Ships!', self)
+        self.placeAllBtn.setStyleSheet('QPushButton {background-color: orange; margin: 0; height: 30px; width: 150px;}')
+        self.placeAllBtn.clicked.connect(self.direction)
 
         #for lengteschip in lengteschepen:
             #self.makeShips(lengteschip)
 
-        self.setship=QtGui.QPushButton('Plaats schip!',self)
-        self.setship.move(200,0)
-        self.setship.clicked.connect(self.makeShip)
-
-        self.setship=QtGui.QPushButton("Plaats alles!",self)
-        self.setship.move(300,0)
-        self.setship.clicked.connect(self.setAllShips)
-
 
         self.btnsDict = {}
         for row in range(10):
-            for column in range(10):
+            for column in range(1, 11):
                 coord = str(row)+"."+str(column)
                 self.btnsDict[coord] = QtGui.QPushButton(str(row) + ":" + str(column))
-                self.btnsDict[coord].setStyleSheet('QPushButton {background-color: white; color: black; width: 60px;'
-                                                   'height: 60px;}')
+                self.btnsDict[coord].setStyleSheet('QPushButton {background-color: white; margin: 0; height: 30px; '
+                                                   'width: 30px;}')
                 self.btnsDict[coord].clicked.connect(lambda c, x=row, y=column, btn=coord: self.btnPressed(x, y, btn))
                 self.grid.addWidget(self.btnsDict[coord], row, column)
 
+        self.grid.addWidget(self.placeBtn, 0, 0)
+        self.grid.addWidget(self.directionBtn, 1, 0)
+        self.grid.addWidget(self.placeAllBtn, 2, 0)
         self.show()
 
     def btnPressed(self, x, y, b):
-        self.rij=x
-        self.kolom=y
+        self.row = x
+        self.column = y
         if b == "0.0" or b == "6.6":
-            self.btnsDict[b].setStyleSheet('QPushButton {background-color: red; color: black; width: 60px;'
-                                           'height: 60px;}')
+            self.btnsDict[b].setStyleSheet('QPushButton {background-color: red; margin: 0; color: black; width: 30px;'
+                                           'height: 30px;}')
             self.infoLabel.setText("hit a ship")
         else:
-            self.btnsDict[b].setStyleSheet('QPushButton {background-color: blue; color: black; width: 60px;'
-                                           'height: 60px;}')
-
-    def createShip(self):
-        self.lengteschepen=list(self.botendic.values())
-        self.lengteschepen.sort()
-        lengteschip=self.lengteschepen.pop()
-        self.makeShip(lengteschip)
+            self.btnsDict[b].setStyleSheet('QPushButton {background-color: lightblue; margin: 0; color: black; '
+                                           'width: 30px; height: 30px;}')
 
     def makeShip(self,lengteschip):
+        self.lenShips = list(self.botendic.values())
+        self.lenShips.sort()
+        # for loopje door de lijst
+        lenShips = self.lenShips.pop()
+        self.makeShip(lenShips)
+        return lenShips
+
+    def makeShip(self, lenShips):
         """
         this function creates the ships and gives a list of coordinates back of where the 5 ships are
         """
         #initialisatie van de waarden
+        self.startship = (self.row, self.column)
 
-        richting=self.richting
-        self.startship = (self.rij, self.kolom)
+        print("lengte schip is", lenShips, "blokjes")
 
-        print("lengte schip is", lengteschip, "blokjes")
-
-        #richting schip
-        if self.richting == "horizontaal":
-            self.rij=self.rij+(lengteschip)
+        if self.shipDirection == "Horizontal":
+            self.row = self.row + lenShips
 
         else:
-            self.kolom=self.kolom+(lengteschip)
+            self.column = self.column + lenShips
 
-        self.endship=(self.rij,self.kolom)
+        self.endship = (self.row, self.column)
 
-        self.lijstships=[]
-        self.lijstships.append(self.startship)
-        self.lijstships.append(self.endship)
+        self.shipsList=[]
+        self.shipsList.append(self.startship)
+        self.shipsList.append(self.endship)
 
     def setAllShips(self):
         coords={}
         # maak alle coordinaten van een schip
 
         for coor in range(self.lengteschip):
-
             if self.richting == "horizontaal":
                 coor[1]+=1
                 print(coor)
@@ -112,38 +113,29 @@ class Battleships(QtGui.QWidget):
 
         #coords = {"Aircraft Carrier":[(9,2),(9,3),(9,4),(9,5)], "Battleship":[(1,1)]}
         for ship in self.botendic:
-            coords[ship]=self.lijstships
+            coords[ship] = self.shipsList
         print(coords)
 
-        return coords
-
-    def direction(self,pressed):
+    def direction(self, pressed):
         """
         This function gets the direction of  the ship from the user and changes the label of the button
         """
-        source=self.sender()
+        source = self.sender()
         if pressed:
-            source.setText("horizontaal")
-            self.richting="horizontaal"
+            source.setText("Horizontal")
+            self.shipDirection = "Horizontal"
         else:
-            source.setText("verticaal")
-            self.richting="verticaal"
+            source.setText("Vertical")
+            self.shipDirection = "Vertical"
 
-    #def validate(self,board,ship,x,y,ori):3
-    #validate the ship can be placed at given coordinates
-    #if ori == "v" and x+ship > 10:
-        #return False
-    #elif ori == "h" and y+ship > 10:
-        #return False
-    #else:
-        #if ori == "v":
-            #for i in range(ship):
-              #if board[x+i][y] != -1:
-                    #return False
-        #elif ori == "h":
-            #for i in range(ship):
-                #if board[x][y+i] != -1:
-                    #return False
+    def checkBoundaries(self):
+        """
+        Check of a ship is placed within the board
+        """
+        if self.shipDirection == "Horizontal" and self.lenShips + self.row > 10:
+            return False
+        elif self.shipDirection == "Vertical" and self.lenShips + self.column > 10:
+            return False
 
     def checkShips(self):
         """
