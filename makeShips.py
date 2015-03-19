@@ -71,7 +71,6 @@ class Battleships(QtGui.QWidget):
         self.lengteschepen.sort()
         lengteschip=self.lengteschepen.pop()
         self.makeShip(lengteschip)
-        return lengteschip
 
     def makeShip(self,lengteschip):
         """
@@ -80,12 +79,12 @@ class Battleships(QtGui.QWidget):
         #initialisatie van de waarden
 
         richting=self.richting
-        self.startship=(self.rij, self.kolom)
+        self.startship = (self.rij, self.kolom)
 
         print("lengte schip is", lengteschip, "blokjes")
 
         #richting schip
-        if richting == "horizontaal":
+        if self.richting == "horizontaal":
             self.rij=self.rij+(lengteschip)
 
         else:
@@ -99,6 +98,17 @@ class Battleships(QtGui.QWidget):
 
     def setAllShips(self):
         coords={}
+        # maak alle coordinaten van een schip
+
+        for coor in range(self.lengteschip):
+
+            if self.richting == "horizontaal":
+                coor[1]+=1
+                print(coor)
+
+            else:
+                coor[0]+=1
+
 
         #coords = {"Aircraft Carrier":[(9,2),(9,3),(9,4),(9,5)], "Battleship":[(1,1)]}
         for ship in self.botendic:
