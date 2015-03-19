@@ -24,11 +24,12 @@ class Battleships(QtGui.QWidget):
         self.grid = QtGui.QGridLayout()
         self.setLayout(self.grid)
 
-        self.botendic = {"Aircraft Carrier": 5, "Battleship": 4, "Submarine": 3, "Destroyer": 3, "Patrol Boat": 2}
+        self.shipdic = {"Aircraft Carrier": 5, "Battleship": 4, "Submarine": 3, "Destroyer": 3, "Patrol Boat": 2}
 
         # Create buttons for playing game
         self.placeBtn = QtGui.QPushButton('Place Ship!', self)
         self.placeBtn.setStyleSheet('QPushButton {background-color: orange; margin: 0; height: 30px; width: 150px;}')
+        self.placeBtn.clicked.connect(self.makeShip)
 
         self.directionBtn = QtGui.QPushButton('Horizontal!', self)
         self.directionBtn.setStyleSheet('QPushButton {background-color: orange; margin: 0; height: 30px; width: 150px;}')
@@ -37,11 +38,7 @@ class Battleships(QtGui.QWidget):
 
         self.placeAllBtn = QtGui.QPushButton('Submit Ships!', self)
         self.placeAllBtn.setStyleSheet('QPushButton {background-color: orange; margin: 0; height: 30px; width: 150px;}')
-        self.placeAllBtn.clicked.connect(self.direction)
-
-        #for lengteschip in lengteschepen:
-            #self.makeShips(lengteschip)
-
+        self.placeAllBtn.clicked.connect(self.setAllShips)
 
         self.btnsDict = {}
         for row in range(10):
@@ -69,36 +66,37 @@ class Battleships(QtGui.QWidget):
             self.btnsDict[b].setStyleSheet('QPushButton {background-color: lightblue; margin: 0; color: black; '
                                            'width: 30px; height: 30px;}')
 
-    def makeShip(self,lengteschip):
-        self.lenShips = list(self.botendic.values())
-        self.lenShips.sort()
-        # for loopje door de lijst
-        lenShips = self.lenShips.pop()
-        self.makeShip(lenShips)
-        return lenShips
+    def makeShip(self):
+        for ship in self.shipdic.values():
+            length=int(ship)
+            self.makeShips(length)
+            print(length)
 
-    def makeShip(self, lenShips):
+    def makeShips(self,lenShip):
         """
         this function creates the ships and gives a list of coordinates back of where the 5 ships are
         """
         #initialisatie van de waarden
-        self.startship = (self.row, self.column)
-
-        print("lengte schip is", lenShips, "blokjes")
-
-        if self.shipDirection == "Horizontal":
-            self.row = self.row + lenShips
-
-        else:
-            self.column = self.column + lenShips
-
-        self.endship = (self.row, self.column)
-
         self.shipsList=[]
-        self.shipsList.append(self.startship)
-        self.shipsList.append(self.endship)
+        for ship in self.shipdic.values():
+            self.startship = (self.row, self.column)
+            print("U plaats nu het schip met lengte:", ship)
+            print(self.shipDirection)
 
-    def setAllShips(self):
+            if self.shipDirection == "Horizontal":
+                self.row = self.row + ship
+
+            else:
+                self.column = self.column + ship
+
+            self.endship = (self.row, self.column)
+            self.shipsList.append(self.startship)
+            self.shipsList.append(self.endship)
+
+            #call set Ship
+            self.setShip(ship)
+
+    def setAllShips(self,shiplist):
         coords={}
         # maak alle coordinaten van een schip
 
@@ -110,11 +108,20 @@ class Battleships(QtGui.QWidget):
             else:
                 coor[0]+=1
 
-
         #coords = {"Aircraft Carrier":[(9,2),(9,3),(9,4),(9,5)], "Battleship":[(1,1)]}
-        for ship in self.botendic:
-            coords[ship] = self.shipsList
+        for ship in shiplist:
+            coords[ship] = coor
         print(coords)
+
+    def setShip(self,ship):
+        if self.shipDirection == "vertical":
+            for i in range(ship):
+                print("Dag!")
+
+        else:
+            for i in range(ship):
+                print("hallo!")
+
 
     def direction(self, pressed):
         """
