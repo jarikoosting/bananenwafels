@@ -24,28 +24,45 @@ class Battleships(QtGui.QWidget):
         self.grid = QtGui.QGridLayout()
         self.setLayout(self.grid)
 
+        # Create buttons for playing game
+        placeBtn = QtGui.QPushButton('Place Ship!', self)
+        placeBtn.setStyleSheet('QPushButton {background-color: orange; margin: 0; height: 30px; width: 150px;}')
+        #btn.clicked.connect(self.placeShip)
+
+        self.square = QtGui.QFrame(self)
+        self.square.setGeometry(20, 65, 200, 200)
+        p1 = QtGui.QPushButton('Vertical', self)
+        p1.setStyleSheet('QPushButton {background-color: orange; margin: 0; height: 30px; width: 75px;}')
+        p2 = QtGui.QPushButton('Horizontal', self)
+        p2.setStyleSheet('QPushButton {background-color: orange; margin: 0; height: 30px; width: 50px;}')
+
         self.btnsDict = {}
 
         for row in range(10):
-            for column in range(10):
+            for column in range(1, 11):
                 coord = str(row)+"."+str(column)
                 self.btnsDict[coord] = QtGui.QPushButton(str(row) + ":" + str(column))
-                self.btnsDict[coord].setStyleSheet('QPushButton {background-color: white; color: black; width: 60px;'
-                                                   'height: 60px;}')
+                self.btnsDict[coord].setStyleSheet('QPushButton {background-color: white; margin: 0; height: 30px; '
+                                                   'width: 30px;}')
                 self.btnsDict[coord].clicked.connect(lambda c, x=row, y=column, btn=coord: self.btnPressed(x, y, btn))
                 self.grid.addWidget(self.btnsDict[coord], row, column)
 
+        self.grid.addWidget(placeBtn, 0, 0)
+        self.grid.addWidget(p1, 1, 0)
+        self.grid.addWidget(p2, 2, 0)
         self.show()
 
     def btnPressed(self, x, y, b):
         print(x, y)
-        if b == "0.0" or b == "6.6":
-            self.btnsDict[b].setStyleSheet('QPushButton {background-color: red; color: black; width: 60px;'
-                                           'height: 60px;}')
+        c = (x, y)
+        #listcoord = checkShips(c)
+        if b == "0.1" or b == "6.7":
+            self.btnsDict[b].setStyleSheet('QPushButton {background-color: red; margin: 0; color: black; width: 30px;'
+                                           'height: 30px;}')
             self.infoLabel.setText("hit a ship")
         else:
-            self.btnsDict[b].setStyleSheet('QPushButton {background-color: blue; color: black; width: 60px;'
-                                           'height: 60px;}')
+            self.btnsDict[b].setStyleSheet('QPushButton {background-color: lightblue; margin: 0; color: black; width: 30px;'
+                                           'height: 30px;}')
 
 
 def main():
