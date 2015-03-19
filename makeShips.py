@@ -122,6 +122,12 @@ class Battleships(QtGui.QWidget):
             source.setText("Vertical")
             self.shipDirection = "Vertical"
 
+    def checkBoundaries(self):
+
+        if self.shipDirection == "Horizontal" and self.lenShips + self.row > 10:
+            return False
+        elif self.shipDirection == "Vertical" and self.lenShips + self.column > 10:
+            return False
 
     def checkShips(self):
         """
