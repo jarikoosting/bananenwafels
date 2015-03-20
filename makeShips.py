@@ -68,9 +68,8 @@ class Battleships(QtGui.QWidget):
 
     def makeShip(self):
         for ship in self.shipdic.values():
-            length=int(ship)
-            self.makeShips(length)
-            print(length)
+            self.length=int(ship)
+            self.makeShips(self.length)
 
     def makeShips(self,lenShip):
         """
@@ -78,29 +77,26 @@ class Battleships(QtGui.QWidget):
         """
         #initialisatie van de waarden
         self.shipsList=[]
-        for ship in self.shipdic.values():
-            self.startship = (self.row, self.column)
-            print("U plaats nu het schip met lengte:", ship)
-            print(self.shipDirection)
+        self.startship = (self.row, self.column)
+        print("U plaats nu het schip met lengte:", lenShip)
+        print("richting is: ", self.shipDirection)
 
-            if self.shipDirection == "Horizontal":
-                self.row = self.row + ship
+        if self.shipDirection == "Horizontal":
+            self.row = self.row + ship
 
-            else:
-                self.column = self.column + ship
+        else:
+            self.column = self.column + ship
 
-            self.endship = (self.row, self.column)
-            self.shipsList.append(self.startship)
-            self.shipsList.append(self.endship)
+        self.endship = (self.row, self.column)
+        self.shipsList.append(self.startship)
+        self.shipsList.append(self.endship)
 
-            #call set Ship
-            self.setShip(ship)
 
     def setAllShips(self,shiplist):
         coords={}
         # maak alle coordinaten van een schip
 
-        for coor in range(self.lengteschip):
+        for coor in range(self.length):
             if self.richting == "horizontaal":
                 coor[1]+=1
                 print(coor)
@@ -113,14 +109,6 @@ class Battleships(QtGui.QWidget):
             coords[ship] = coor
         print(coords)
 
-    def setShip(self,ship):
-        if self.shipDirection == "vertical":
-            for i in range(ship):
-                print("Dag!")
-
-        else:
-            for i in range(ship):
-                print("hallo!")
 
 
     def direction(self, pressed):
