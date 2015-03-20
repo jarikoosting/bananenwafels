@@ -25,21 +25,23 @@ class Battleships(QtGui.QWidget):
         self.setLayout(self.grid)
 
         self.shipdic = {"Aircraft Carrier": 5, "Battleship": 4, "Submarine": 3, "Destroyer": 3, "Patrol Boat": 2}
+        self.boatCoords = {}
 
         # Create buttons for playing game
         self.placeBtn = QtGui.QPushButton('Place Ship!', self)
         self.placeBtn.setStyleSheet('QPushButton {background-color: orange; margin: 0; height: 30px; width: 150px;}')
         self.placeBtn.clicked.connect(self.makeShip)
 
-        self.directionBtn = QtGui.QPushButton('Horizontal!', self)
+        self.directionBtn = QtGui.QPushButton('Horizontal', self)
         self.directionBtn.setStyleSheet('QPushButton {background-color: orange; margin: 0; height: 30px; width: 150px;}')
         self.directionBtn.clicked.connect(self.direction)
-        self.shipDirection = "Horizontal"
         self.boatIndex = 0
 
         self.placeAllBtn = QtGui.QPushButton('Submit Ships!', self)
         self.placeAllBtn.setStyleSheet('QPushButton {background-color: orange; margin: 0; height: 30px; width: 150px;}')
         self.placeAllBtn.clicked.connect(self.setAllShips)
+
+        self.boatLengths = self.shipDic.keys()
 
         self.btnsDict = {}
         for row in range(10):
@@ -105,38 +107,43 @@ class Battleships(QtGui.QWidget):
             else:
                 coor[0]+=1
 
-        #coords = {"Aircraft Carrier":[(9,2),(9,3),(9,4),(9,5)], "Battleship":[(1,1)]}
         for ship in shiplist:
             coords[ship] = coor
         print(coords)
 
-    def testmakeShips(self):
-        boats = self.shipDic.keys()
-        coordsList = []
-        boatCoords = {}
-        if self.shipDirection == "Horizontal":
-            for i in range(len(self.shipDic.values()) + 1):
-                coordsList.append((self.row + i, self.column))
+    def testshipBtn(self):
+        coordsList = testmakeShips(self.boatLengths[0])
+        for i in coordsList:
+            colorBtn(i)
+        self.boatLengts.pop(0)
 
+
+    def testmakeShips(self, boatLength):
+        coordsList = []
+        if self.directionBtn.text() == "Horizontal":
+            for i in boatLength:
+                coordsList.append((self.row + i, self.column))
         else:
-            for i in range(len(self.shipDic.values()) + 1):
+            for i in boatLength:
                 coordsList.append((self.row, self.column + i))
 
-        boatCoords[self.boatIndex] = coordsList
-        self.boatIndex += 1
+        #self.boatCoords[self.shipDic[boatLength]] = coordsList
+        return coordsList
+
+    def colorBtn(self, c):
+        b = str(c[0]) + "." + str(c[1])
+        self.btnsDict[b].setStyleSheet('QPushButton {background-color: red; margin: 0; color: black; width: 30px;'
+                                           'height: 30px;}')
 
 
-    def direction(self, pressed):
+    def direction(self):
         """
         This function gets the direction of  the ship from the user and changes the label of the button
         """
-        source = self.sender()
-        if pressed:
-            source.setText("Horizontal")
-            self.shipDirection = "Horizontal"
+        if self.directionBtn.text() == "Horizontal":
+            self.directionBtn.setText("Vertical")
         else:
-            source.setText("Vertical")
-            self.shipDirection = "Vertical"
+            self.directionBtn.setText("Horizontal")
 
     def checkBoundaries(self):
         """
