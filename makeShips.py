@@ -96,6 +96,7 @@ class Battleships(QtGui.QWidget):
         elif self.directionBtn.text() == "Vertical":
             for i in range(boatLength):
                 coordsList.append((int(self.column) + int(i), int(self.row)))
+        self.checkBoundaries(coordsList)
         return coordsList
 
     def submitShip(self):
@@ -132,14 +133,16 @@ class Battleships(QtGui.QWidget):
         for i in self.shipCoords:
             self.colorBtn(i)
 
-    def checkBoundaries(self):
+    def checkBoundaries(self, coordList):
         """
         Check of a ship is placed within the board
         """
-        if self.shipDirection == "Horizontal" and self.lenShips + self.row > 10:
-            return False
-        elif self.shipDirection == "Vertical" and self.lenShips + self.column > 10:
-            return False
+        for i, j in coordList:
+            if (i > 9 or i < 0) or (j > 10 or j < 0):
+                return False
+            for ship, coords in self.boatCoords.items():
+                if (i,j) in coords:
+                    return False
 
     def checkShips(self):
         """
