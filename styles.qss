@@ -38,3 +38,11 @@
 #Tile:hover{
     background-color: darkblue;
 }
+#Ship {
+    background-color: red;
+    margin: 0;
+    color: black;
+    width: 30px;
+    height: 30px;
+    border-radius: 15px;
+}

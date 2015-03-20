@@ -81,9 +81,9 @@ class Battleships(QtGui.QWidget):
         self.clearBtns()
         for l in self.boatCoords.values():
             for c in l:
-                self.colorBtn(c, "red")
+                self.colorBtn(c)
         for i in self.shipCoords:
-            self.colorBtn(i, "red")
+            self.colorBtn(i)
 
     def generateShip(self, boatLength):
         """
@@ -105,20 +105,20 @@ class Battleships(QtGui.QWidget):
         self.boatCoords[self.shipDic[self.boatLengths[0]]] = self.shipCoords
         self.boatLengths.pop(0)
 
-    def colorBtn(self, coord, color):
+    def colorBtn(self, coord):
         """
         Colors buttons red or white.
         """
-        self.btnsDict[coord].setStyleSheet('QPushButton {background-color: %s; margin: 0; color: black; width: 30px; '
-                                           'height: 30px;}' % color)
+        self.btnsDict[coord].setObjectName('Ship')
+        self.btnsDict[coord].setStyleSheet(self.stylesheet)
 
     def clearBtns(self):
         """
         Clears buttons, everything will be white again.
         """
         for b in self.btnsDict:
-            self.btnsDict[b].setStyleSheet('QPushButton {background-color: %s; margin: 0; height: 30px; '
-                                           'width: 30px;}' % "white")
+            self.btnsDict[b].setObjectName('Tile')
+            self.btnsDict[b].setStyleSheet(self.stylesheet)
 
 
     def direction(self):
@@ -130,7 +130,7 @@ class Battleships(QtGui.QWidget):
         else:
             self.directionBtn.setText("Horizontal")
         for i in self.shipCoords:
-            self.colorBtn(i, "white")
+            self.colorBtn(i)
 
     def checkBoundaries(self):
         """
