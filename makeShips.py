@@ -45,9 +45,9 @@ class Battleships(QtGui.QWidget):
         self.directionBtn.clicked.connect(self.direction)
 
         # Create button for starting game
-        self.placeAllBtn = QtGui.QPushButton('Start Game!', self)
-        self.placeAllBtn.setStyleSheet(self.stylesheet)
-        self.placeAllBtn.setObjectName('MenuButton')
+        self.startGame = QtGui.QPushButton('Start Game!', self)
+        self.startGame.setStyleSheet(self.stylesheet)
+        self.startGame.setObjectName('MenuButton')
         #self.placeAllBtn.clicked.connect(self.setAllShips)
 
         # Create a dictionary for buttons, and create 100 buttons for the board
@@ -65,9 +65,9 @@ class Battleships(QtGui.QWidget):
                 self.grid.addWidget(self.btnsDict[coord], row, column)
 
         # Add other buttons to grid
-        self.grid.addWidget(self.placeBtn, 0, 0)
-        self.grid.addWidget(self.directionBtn, 1, 0)
-        self.grid.addWidget(self.placeAllBtn, 2, 0)
+        self.grid.addWidget(self.placeBtn, 1, 0)
+        self.grid.addWidget(self.directionBtn, 2, 0)
+        self.grid.addWidget(self.startGame, 0, 0)
         self.show()
 
     def placeShip(self, x, y):
@@ -109,7 +109,6 @@ class Battleships(QtGui.QWidget):
         """
         Colors buttons red or white.
         """
-        #b = str(coord[0]) + "." + str(coord[1])
         self.btnsDict[coord].setStyleSheet('QPushButton {background-color: %s; margin: 0; color: black; width: 30px; '
                                            'height: 30px;}' % color)
 
