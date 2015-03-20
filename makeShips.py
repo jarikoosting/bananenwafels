@@ -35,6 +35,7 @@ class Battleships(QtGui.QWidget):
         self.directionBtn.setStyleSheet('QPushButton {background-color: orange; margin: 0; height: 30px; width: 150px;}')
         self.directionBtn.clicked.connect(self.direction)
         self.shipDirection = "Horizontal"
+        self.boatIndex = 0
 
         self.placeAllBtn = QtGui.QPushButton('Submit Ships!', self)
         self.placeAllBtn.setStyleSheet('QPushButton {background-color: orange; margin: 0; height: 30px; width: 150px;}')
@@ -109,6 +110,20 @@ class Battleships(QtGui.QWidget):
             coords[ship] = coor
         print(coords)
 
+    def testmakeShips(self):
+        boats = self.shipDic.keys()
+        coordsList = []
+        boatCoords = {}
+        if self.shipDirection == "Horizontal":
+            for i in range(len(self.shipDic.values()) + 1):
+                coordsList.append((self.row + i, self.column))
+
+        else:
+            for i in range(len(self.shipDic.values()) + 1):
+                coordsList.append((self.row, self.column + i))
+
+        boatCoords[self.boatIndex] = coordsList
+        self.boatIndex += 1
 
 
     def direction(self, pressed):
