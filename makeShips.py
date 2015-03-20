@@ -50,7 +50,8 @@ class Battleships(QtGui.QWidget):
         for row in range(10):
             for column in range(1, 11):
                 # Make a unique variable name bij adding de coordinates together in a string
-                coord = str(row)+"."+str(column)
+                #coord = str(row)+"."+str(column)
+                coord = (row, column)
                 self.btnsDict[coord] = QtGui.QPushButton(str(row) + ":" + str(column))
                 self.btnsDict[coord].setStyleSheet('QPushButton {background-color: white; margin: 0; height: 30px; '
                                                    'width: 30px;}')
@@ -93,24 +94,26 @@ class Battleships(QtGui.QWidget):
         """
         Places the ship and its coordinates in a dictionary.
         """
-        self.boatCoords[self.shipDic[boatLength]] = self.shipCoords
+        self.boatCoords[self.shipDic[self.boatLengths[0]]] = self.shipCoords
         self.boatLengths.pop(0)
+        print(self.boatCoords)
 
     def colorBtn(self, coord, color):
         """
         Colors buttons red or white.
         """
-        b = str(coord[0]) + "." + str(coord[1])
-        self.btnsDict[b].setStyleSheet('QPushButton {background-color: %s; margin: 0; color: black; width: 30px; '
-                                       'height: 30px;}' % color)
+        #b = str(coord[0]) + "." + str(coord[1])
+        self.btnsDict[coord].setStyleSheet('QPushButton {background-color: %s; margin: 0; color: black; width: 30px; '
+                                           'height: 30px;}' % color)
 
     def clearBtns(self):
         """
-        Clears all buttons, everything will be white again.
+        Clears buttons, everything will be white again.
         """
         for b in self.btnsDict:
-            self.btnsDict[b].setStyleSheet('QPushButton {background-color: %s; margin: 0; height: 30px; '
-                                           'width: 30px;}' % "white")
+            if b in self.boatCoords.values():
+                self.btnsDict[b].setStyleSheet('QPushButton {background-color: %s; margin: 0; height: 30px; '
+                                               'width: 30px;}' % "white")
 
     def direction(self):
         """
@@ -147,7 +150,7 @@ class Battleships(QtGui.QWidget):
                     coord.remove(el)
 
                     # Check if ship is destroyed after the hit
-                    Battleships.checkDestroyed(self,coords)
+                    Battleships.checkDestroyed(self, coords)
                     return True
 
         # None of the ships got a hit!
