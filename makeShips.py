@@ -23,6 +23,9 @@ class Battleships(QtGui.QWidget):
         self.grid = QtGui.QGridLayout()
         self.setLayout(self.grid)
 
+        # Read QSS file for styles
+        self.stylesheet = open(os.getcwd() + '/styles.qss').read()
+
         # Create a dictonairy with ships, an empty dictonairy for ships with coords and a list for the lengts of the
         # boats.
         self.shipDic = {5: "Aircraft Carrier", 4: "Battleship", 3: "Submarine", 2: "Patrol Boat"}
@@ -31,18 +34,20 @@ class Battleships(QtGui.QWidget):
 
         # Create button for placing ships
         self.placeBtn = QtGui.QPushButton('Place Ship!', self)
-        self.placeBtn.setStyleSheet('QPushButton {background-color: orange; margin: 0; height: 30px; width: 150px;}')
+        self.placeBtn.setObjectName('MenuButton')
+        self.placeBtn.setStyleSheet(self.stylesheet)
         self.placeBtn.clicked.connect(self.submitShip)
 
         # Create button for placing ships vertically or horizontally
         self.directionBtn = QtGui.QPushButton('Horizontal', self)
-        self.directionBtn.setStyleSheet('QPushButton {background-color: orange; margin: 0; '
-                                        'height: 30px; width: 150px;}')
+        self.directionBtn.setStyleSheet(self.stylesheet)
+        self.directionBtn.setObjectName('MenuButton')
         self.directionBtn.clicked.connect(self.direction)
 
         # Create button for starting game
         self.placeAllBtn = QtGui.QPushButton('Start Game!', self)
-        self.placeAllBtn.setStyleSheet('QPushButton {background-color: orange; margin: 0; height: 30px; width: 150px;}')
+        self.placeAllBtn.setStyleSheet(self.stylesheet)
+        self.placeAllBtn.setObjectName('MenuButton')
         #self.placeAllBtn.clicked.connect(self.setAllShips)
 
         # Create a dictionary for buttons, and create 100 buttons for the board
@@ -53,8 +58,8 @@ class Battleships(QtGui.QWidget):
                 #coord = str(row)+"."+str(column)
                 coord = (row, column)
                 self.btnsDict[coord] = QtGui.QPushButton(str(row) + ":" + str(column))
-                self.btnsDict[coord].setStyleSheet('QPushButton {background-color: white; margin: 0; height: 30px; '
-                                                   'width: 30px;}')
+                self.btnsDict[coord].setStyleSheet(self.stylesheet)
+                self.btnsDict[coord].setObjectName('Tile')
                 # Connect the button to a _method_ where x and y are specified by using lambda
                 self.btnsDict[coord].clicked.connect(lambda c, x=row, y=column: self.placeShip(x, y))
                 self.grid.addWidget(self.btnsDict[coord], row, column)
