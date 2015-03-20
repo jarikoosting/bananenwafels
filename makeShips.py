@@ -1,7 +1,7 @@
 #!/opt/local/bin/python3.4
 
 from PyQt4 import QtGui, QtCore
-import sys
+import os, sys
 
 
 class Battleships(QtGui.QWidget):
