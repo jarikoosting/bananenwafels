@@ -79,6 +79,9 @@ class Battleships(QtGui.QWidget):
         self.column = x
         self.shipCoords = self.generateShip(self.boatLengths[0])
         self.clearBtns()
+        for l in self.boatCoords.values():
+            for c in l:
+                self.colorBtn(c, "red")
         for i in self.shipCoords:
             self.colorBtn(i, "red")
 
@@ -101,7 +104,6 @@ class Battleships(QtGui.QWidget):
         """
         self.boatCoords[self.shipDic[self.boatLengths[0]]] = self.shipCoords
         self.boatLengths.pop(0)
-        print(self.boatCoords)
 
     def colorBtn(self, coord, color):
         """
@@ -116,9 +118,9 @@ class Battleships(QtGui.QWidget):
         Clears buttons, everything will be white again.
         """
         for b in self.btnsDict:
-            if b in self.boatCoords.values():
-                self.btnsDict[b].setStyleSheet('QPushButton {background-color: %s; margin: 0; height: 30px; '
-                                               'width: 30px;}' % "white")
+            self.btnsDict[b].setStyleSheet('QPushButton {background-color: %s; margin: 0; height: 30px; '
+                                           'width: 30px;}' % "white")
+
 
     def direction(self):
         """
