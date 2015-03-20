@@ -153,7 +153,7 @@ class Battleships(QtGui.QWidget):
         After placement, if the user clicks, it goes to this function!
         """
         coords = {"Aircraft Carrier":[(9,2),(9,3),(9,4),(9,5)], "Battleship":[(1,1)]}
-        click = (9,10)
+        click = (self.row,self.column)
 
         # Loop through dictionary with ships and coords
         for ship, coord in coords.items():
