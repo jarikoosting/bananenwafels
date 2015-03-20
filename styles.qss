@@ -1,0 +1,40 @@
+#MenuButton {
+    background-color: orange;
+    margin: 0;
+    height: 30px;
+    width: 150px;
+    border-radius: 5px;
+    border-bottom: 4px solid #CD6839;
+    margin-right: 15px;
+}
+#MenuButton:hover {
+    background-color: #E87025;
+    border-bottom: 4px solid #CD6839;
+}
+#BigButton{
+    background-color: orange;
+    margin: 0;
+    height: 60px;
+    width: 150px;
+    border-radius: 5px;
+    border-bottom: 4px solid #CD6839;
+    font-size: 20px;
+}
+#BigButton:hover {
+    background-color: #E87025;
+    border-bottom: 4px solid #CD6839;
+}
+#StartAlign {
+    qproperty-alignment: AlignCenter;
+}
+#Tile{
+    background-color: dodgerblue;
+    margin: 0;
+    height: 30px;
+    width: 30px;
+    color: white;
+    border-radius: 15px;
+}
+#Tile:hover{
+    background-color: darkblue;
+}
