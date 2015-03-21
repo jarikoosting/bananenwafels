@@ -2,7 +2,7 @@
 
 from PyQt4 import QtGui, QtCore
 import os, sys
-
+from random import randrange
 
 class Battleships(QtGui.QWidget):
     def __init__(self):
@@ -121,7 +121,6 @@ class Battleships(QtGui.QWidget):
             self.btnsDict[b].setObjectName('Tile')
             self.btnsDict[b].setStyleSheet(self.stylesheet)
 
-
     def direction(self):
         """
         This function gets the direction of  the ship from the user and changes the label of the button
@@ -132,6 +131,33 @@ class Battleships(QtGui.QWidget):
             self.directionBtn.setText("Horizontal")
         for i in self.shipCoords:
             self.colorBtn(i)
+
+    def makeAIShips(self):
+        """This function creates the ships for the Computer and validates them """
+        coordDic={}
+        boatLength = [5,4,3,3,2]
+
+        for ship in boatLength:
+            coordsList = []
+            # set direction ship
+            direction = randrange(2)
+            if direction == 0:
+                directionShip = "Horizontal"
+            elif direction == 1:
+                directionShip = "Vertical"
+
+            startX = randrange(1,11)
+            startY = randrange(1,11)
+
+            if directionShip == "Horizontal":
+                for i in range(ship):
+                    coordsList.append((int(startX), int(startY) + int(i)))
+
+            elif directionShip == "Vertical":
+                for j in range(ship):
+                    coordsList.append((int(startX)+ int(j), int(startY)))
+            coordDic[ship] = coordsList
+        return coordDic
 
     def checkBoundaries(self, coordList):
         """
