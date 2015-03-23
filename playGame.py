@@ -5,12 +5,13 @@ import os, sys
 
 
 class BSGame(QtGui.QWidget):
-    def __init__(self, usrBoatCoordinates):
+    def __init__(self, usrBoatCoordinates, botBoatCoordinates):
         """
         Constructs a Battleship game object, with which the user can play a game.
         """
         super(BSGame, self).__init__()
         self.usrBoatCoords = usrBoatCoordinates
+        self.botBoatCoords = botBoatCoordinates
         self.initUI()
 
     def initUI(self):
@@ -66,7 +67,7 @@ class BSGame(QtGui.QWidget):
                 self.botsBtnsDict[coord].setStyleSheet(self.stylesheet)
                 self.botsBtnsDict[coord].setObjectName('Tile')
                 # Connect the button to a _method_ where x and y are specified by using lambda
-                self.botsBtnsDict[coord].clicked.connect(lambda c, x=row, y=column: self.placeShip(x, y))
+                self.botsBtnsDict[coord].clicked.connect(lambda c, x=row, y=column: self.fire(x, y))
                 self.grid.addWidget(self.botsBtnsDict[coord], row, column)
 
 
@@ -77,6 +78,14 @@ class BSGame(QtGui.QWidget):
         self.grid.addWidget(self.botFeedback, 4, 11)
         self.manageShips()
         self.show()
+
+    def playing(self):
+        while self.botBoatCoords != {} or self.usrBoatCoords != {}:
+            # Your turn label
+
+            # Computers turn label
+
+    def fire(self, x, y):
 
     def manageShips(self):
         """
