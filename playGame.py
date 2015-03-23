@@ -2,6 +2,7 @@
 
 from PyQt4 import QtGui, QtCore
 import os, sys
+import time
 
 
 class BSGame(QtGui.QWidget):
@@ -86,8 +87,17 @@ class BSGame(QtGui.QWidget):
             # Computers turn label
 
     def fire(self, x, y):
-        self.checkShips(x, y)
+        self.checkShips(x, y, self.botBoatCoords)
+        autox, autoy = self.randomShoot()
+        time.sleep(1)
+        self.checkShips(autox, autoy, self.usrBoatCoords)
 
+    def randomShoot(self):
+        """
+        Function that generates random coordinations.
+        Needs randrange() from random module.
+        """
+        return randrange(10), randrange(10)
 
     def manageShips(self):
         """
@@ -105,7 +115,7 @@ class BSGame(QtGui.QWidget):
         self.userBtnsDict[coord].setObjectName('Ship')
         self.userBtnsDict[coord].setStyleSheet(self.stylesheet)
 
-    def checkShips(self, x, y):
+    def checkShips(self, x, y, coords):
         """
         Check if a ship has been hit
         After placement, if the user clicks, it goes to this function!
@@ -113,16 +123,18 @@ class BSGame(QtGui.QWidget):
         click = (x, y)
 
         # Loop through dictionary with ships and coords
-        for ship, coord in self.botBoatCoordsBoat.items():
+        for ship, coord in coords.items():
             for el in coord:
                 if click == el:
-                    self.botBoatCoordsBoat.remove(el)
+                    # KLEUR HEM ROOD el moet rood worden
+                    coord.remove(el)
 
                     # Check if ship is destroyed after the hit
-                    self.checkDestroyed(coords)
+                    self.checkDestroyed()
                     return True
 
         # None of the ships got a hit!
+        # KLEUR HEM DONKERBLAUW
         return False
 
     def checkDestroyed(self):
@@ -131,8 +143,8 @@ class BSGame(QtGui.QWidget):
         """
 
         # Return True when ship is destroyed
-        for ship, coord in self.botBoatCoords.items():
-            if self.botBoatCoords.get(ship) == []:
+        for ship, coord in coords.items():
+            if coords.get(ship) == []:
                 return ship, True
 
         # None of the ships are destroyed
