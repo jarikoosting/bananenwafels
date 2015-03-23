@@ -157,6 +157,26 @@ class BSGame(QtGui.QWidget):
         # None of the ships are destroyed
         return False
 
+    def createWords(self):
+        self.words2=[]
+        self.words3=[]
+        self.words4=[]
+        self.words5=[]
+        with open('words.txt') as in_f:
+            for line in in_f:
+                x = line.split('\n')
+                woord=x[0]
+                if len(woord) == 2:
+                    self.words2.append(woord)
+                elif len(woord) == 3:
+                    self.words3.append(woord)
+                elif len(woord)== 4:
+                    self.words4.append(woord)
+                elif len(woord) == 5:
+                    self.words5.append(woord)
+                else:
+                    return
+
 if __name__ == '__main__':
     app = QtGui.QApplication(sys.argv)
     game = BSGame()
