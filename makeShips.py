@@ -94,6 +94,7 @@ class Battleships(QtGui.QWidget):
         # Check if the coords are within the board
         if self.checkBoundaries(self.shipCoords):
             self.feedback.setText("Ship can't be placed here.")
+            self.shipCoords = []
             return
         self.placeBtn.setEnabled(True)
         self.feedback.setText('')
@@ -118,18 +119,19 @@ class Battleships(QtGui.QWidget):
         """
         Places the ship and its coordinates in a dictionary.
         """
-        self.boatCoords[self.shipDic[self.boatLengths[0]]] = self.shipCoords
-        self.feedback.setText('Your ship is placed.')
-        if len(self.boatLengths) >= 2:
-            self.boatLengths.pop(0)
-        elif len(self.boatLengths) == 1:
-            self.boatLengths.pop(0)
-            self.placeBtn.setEnabled(False)
-            self.startGame.setEnabled(True)
-            self.feedback.setText('You can start the game!')
+        if self.shipCoords != []:
+            self.boatCoords[self.shipDic[self.boatLengths[0]]] = self.shipCoords
+            self.feedback.setText('Your ship is placed.')
+            if len(self.boatLengths) >= 2:
+                self.boatLengths.pop(0)
+            elif len(self.boatLengths) == 1:
+                self.boatLengths.pop(0)
+                self.placeBtn.setEnabled(False)
+                self.startGame.setEnabled(True)
+                self.feedback.setText('You can start the game!')
         else:
-            #feedback met label
-    #baljalkdfadjasdkjfadjkls
+            # Place ship again
+            self.feedback.setText('Place ship again.')
 
     def colorBtn(self, coord):
         """
