@@ -161,10 +161,10 @@ class Battleships(QtGui.QWidget):
 
     def makeAIShips(self):
         """This function creates the ships for the Computer and validates them """
-        coordDic = {}
-        boatLength = [5, 4, 3, 3, 2]
+        self.boatAICoords={}
+        boatLength = [5,4,3,3,2]
 
-        for ship in boatLength:
+        while boatLength != []:
             coordsList = []
             # set direction ship
             direction = randrange(2)
@@ -173,18 +173,30 @@ class Battleships(QtGui.QWidget):
             elif direction == 1:
                 directionShip = "Vertical"
 
-            startX = randrange(1, 11)
-            startY = randrange(1, 11)
+            startX = randrange(10)
+            startY = randrange(10)
 
             if directionShip == "Horizontal":
-                for i in range(ship):
+                for i in range(boatLength[0]):
                     coordsList.append((int(startX), int(startY) + int(i)))
 
             elif directionShip == "Vertical":
-                for j in range(ship):
-                    coordsList.append((int(startX) + int(j), int(startY)))
-            coordDic[ship] = coordsList
-        return coordDic
+                for j in range(boatLength[0]):
+                    coordsList.append((int(startX)+ int(j), int(startY)))
+
+            if self.checkAIboundaries(coordsList, self.boatAICoords.values()):
+                self.boatAICoords[boatLength[0]] = coordsList
+                boatLength.pop(0)
+
+    def checkAIboundaries(l, dv):
+        for i in l:
+            if (i[0] > 9) or (i[1] > 9):
+                return False
+            for coords in dv:
+                for x, y in coords:
+                    if (x,y) in l:
+                        return False
+        return True
 
     def checkBoundaries(self, coordList):
         """
