@@ -86,6 +86,8 @@ class BSGame(QtGui.QWidget):
 
             # Computers turn label
 
+            self.fire(self.row, self.column)
+
     def fire(self, x, y):
         self.checkShips(x, y, self.botBoatCoords)
         autox, autoy = self.randomShoot()
@@ -126,7 +128,9 @@ class BSGame(QtGui.QWidget):
         for ship, coord in coords.items():
             for el in coord:
                 if click == el:
-                    # KLEUR HEM ROOD el moet rood worden
+
+                    self.botsBtnsDict[click].setObjectName('ShipHit')
+                    self.botsBtnsDict[click].setStyleSheet(self.stylesheet)
                     coord.remove(el)
 
                     # Check if ship is destroyed after the hit
@@ -134,7 +138,8 @@ class BSGame(QtGui.QWidget):
                     return True
 
         # None of the ships got a hit!
-        # KLEUR HEM DONKERBLAUW
+        self.botsBtnsDict[click].setObjectName('Shot')
+        self.botsBtnsDict[click].setStyleSheet(self.stylesheet)
         return False
 
     def checkDestroyed(self):
