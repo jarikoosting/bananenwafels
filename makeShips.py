@@ -11,6 +11,7 @@ class Battleships(QtGui.QWidget):
         Constructs a Battleship game object, with which the user can play a game.
         """
         super(Battleships, self).__init__()
+        self.makeAIShips()
         self.initUI()
 
     def initUI(self):
@@ -215,7 +216,7 @@ class Battleships(QtGui.QWidget):
         self.close()
 
         # Go to the game
-        playGame.BSGame(self.boatCoords)
+        playGame.BSGame(self.boatCoords, self.boatAICoords)
 
 if __name__ == '__main__':
     app = QtGui.QApplication(sys.argv)

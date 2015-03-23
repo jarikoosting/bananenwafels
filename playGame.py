@@ -127,6 +127,7 @@ class BSGame(QtGui.QWidget):
             for el in coord:
                 if click == el:
                     # KLEUR HEM ROOD el moet rood worden
+                    # HIT A SHIP LABEL
                     coord.remove(el)
 
                     # Check if ship is destroyed after the hit
@@ -135,6 +136,7 @@ class BSGame(QtGui.QWidget):
 
         # None of the ships got a hit!
         # KLEUR HEM DONKERBLAUW
+        # MISSED A SHIP LABEL
         return False
 
     def checkDestroyed(self):
@@ -145,6 +147,7 @@ class BSGame(QtGui.QWidget):
         # Return True when ship is destroyed
         for ship, coord in coords.items():
             if coords.get(ship) == []:
+                # LABEL SHIP IS DESTROYED
                 return ship, True
 
         # None of the ships are destroyed
