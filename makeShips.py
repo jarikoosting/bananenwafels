@@ -129,6 +129,7 @@ class Battleships(QtGui.QWidget):
             self.feedback.setText('You can start the game!')
         else:
             #feedback met label
+    #baljalkdfadjasdkjfadjkls
 
     def colorBtn(self, coord):
         """
