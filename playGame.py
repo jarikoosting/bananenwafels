@@ -5,12 +5,12 @@ import os, sys
 
 
 class BSGame(QtGui.QWidget):
-    def __init__(self, boatCoordinates):
+    def __init__(self, usrBoatCoordinates):
         """
         Constructs a Battleship game object, with which the user can play a game.
         """
         super(BSGame, self).__init__()
-        self.boatCoords = boatCoordinates
+        self.usrBoatCoords = usrBoatCoordinates
         self.initUI()
 
     def initUI(self):
