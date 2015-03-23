@@ -3,6 +3,7 @@
 from PyQt4 import QtGui, QtCore
 import os, sys
 import time
+from random import randrange
 
 
 class BSGame(QtGui.QWidget):
@@ -86,11 +87,13 @@ class BSGame(QtGui.QWidget):
 
             # Computers turn label
 
+            print("Hoi")
+
     def fire(self, x, y):
-        self.checkShips(x, y, self.botBoatCoords)
+        self.checkShips(x, y, self.botBoatCoords, self.botsBtnsDict)
         autox, autoy = self.randomShoot()
         time.sleep(1)
-        self.checkShips(autox, autoy, self.usrBoatCoords)
+        self.checkShips(autox, autoy, self.usrBoatCoords, self.userBtnsDict)
 
     def randomShoot(self):
         """
@@ -115,31 +118,32 @@ class BSGame(QtGui.QWidget):
         self.userBtnsDict[coord].setObjectName('Ship')
         self.userBtnsDict[coord].setStyleSheet(self.stylesheet)
 
-    def checkShips(self, x, y, coords):
+    def checkShips(self, x, y, coords, field):
         """
         Check if a ship has been hit
         After placement, if the user clicks, it goes to this function!
         """
         click = (x, y)
+        print(coords)
 
         # Loop through dictionary with ships and coords
         for ship, coord in coords.items():
             for el in coord:
                 if click == el:
-                    # KLEUR HEM ROOD el moet rood worden
-                    # HIT A SHIP LABEL
+                    field[el].setObjectName('ShipHit')
+                    field[el].setStyleSheet(self.stylesheet)
                     coord.remove(el)
 
                     # Check if ship is destroyed after the hit
-                    self.checkDestroyed()
+                    self.checkDestroyed(coords)
                     return True
 
         # None of the ships got a hit!
-        # KLEUR HEM DONKERBLAUW
-        # MISSED A SHIP LABEL
+        field[click].setObjectName('Shot')
+        field[click].setStyleSheet(self.stylesheet)
         return False
 
-    def checkDestroyed(self):
+    def checkDestroyed(self, coords):
         """
         Check if a ship is destroyed
         """
@@ -152,6 +156,26 @@ class BSGame(QtGui.QWidget):
 
         # None of the ships are destroyed
         return False
+
+    def createWords(self):
+        self.words2=[]
+        self.words3=[]
+        self.words4=[]
+        self.words5=[]
+        with open('words.txt') as in_f:
+            for line in in_f:
+                x = line.split('\n')
+                woord=x[0]
+                if len(woord) == 2:
+                    self.words2.append(woord)
+                elif len(woord) == 3:
+                    self.words3.append(woord)
+                elif len(woord)== 4:
+                    self.words4.append(woord)
+                elif len(woord) == 5:
+                    self.words5.append(woord)
+                else:
+                    return
 
 if __name__ == '__main__':
     app = QtGui.QApplication(sys.argv)

@@ -175,7 +175,7 @@ class Battleships(QtGui.QWidget):
                 directionShip = "Vertical"
 
             startX = randrange(10)
-            startY = randrange(10)
+            startY = randrange(12,22)
 
             if directionShip == "Horizontal":
                 for i in range(boatLength[0]):
@@ -189,9 +189,11 @@ class Battleships(QtGui.QWidget):
                 self.boatAICoords[boatLength[0]] = coordsList
                 boatLength.pop(0)
 
+        return self.boatAICoords
+
     def checkAIboundaries(self, l, dv):
         for i in l:
-            if (i[0] > 9) or (i[1] > 9):
+            if (i[0] > 9) or (i[1] > 21):
                 return False
             for coords in dv:
                 for x, y in coords:
@@ -216,7 +218,7 @@ class Battleships(QtGui.QWidget):
         self.close()
 
         # Go to the game
-        playGame.BSGame(self.boatCoords, self.boatAICoords)
+        playGame.BSGame(self.boatCoords, self.makeAIShips())
 
 if __name__ == '__main__':
     app = QtGui.QApplication(sys.argv)
