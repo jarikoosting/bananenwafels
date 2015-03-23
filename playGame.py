@@ -36,6 +36,16 @@ class BSGame(QtGui.QWidget):
         self.botLabel.setObjectName('UserLabel')
         self.botLabel.setStyleSheet(self.stylesheet)
 
+        # Feedback with AI actions
+        self.botFeedback = QtGui.QLabel('')
+        self.botFeedback.setObjectName('FeedbackLabel')
+        self.botFeedback.setStyleSheet(self.stylesheet)
+
+        # Feedback with User actions
+        self.userFeedback = QtGui.QLabel('')
+        self.userFeedback.setObjectName('FeedbackLabel')
+        self.userFeedback.setStyleSheet(self.stylesheet)
+
         # Create a dictionary for buttons, and create 100 buttons for the board
         self.userBtnsDict = {}
         for row in range(10):
@@ -48,6 +58,7 @@ class BSGame(QtGui.QWidget):
                 # Connect the button to a _method_ where x and y are specified by using lambda
                 self.userBtnsDict[coord].clicked.connect(lambda c, x=row, y=column: self.placeShip(x, y))
                 self.grid.addWidget(self.userBtnsDict[coord], row, column)
+
         self.botsBtnsDict = {}
         for row in range(10):
             for column in range(12, 22):
@@ -64,6 +75,8 @@ class BSGame(QtGui.QWidget):
         # Add other buttons to grid
         self.grid.addWidget(self.userLabel, 0, 0)
         self.grid.addWidget(self.botLabel, 0, 11)
+        self.grid.addWidget(self.userFeedback, 4, 0)
+        self.grid.addWidget(self.botFeedback, 4, 11)
         self.manageShips()
         self.show()
 
