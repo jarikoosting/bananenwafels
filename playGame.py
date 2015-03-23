@@ -85,7 +85,7 @@ class BSGame(QtGui.QWidget):
         This function does all the work. If a button is pressed, it generates the coordinates for a ship and makes
         the surrounding buttons red.
         """
-        for l in self.boatCoords.values():
+        for l in self.usrBoatCoords.values():
             for c in l:
                 self.colorBtn(c)
 
