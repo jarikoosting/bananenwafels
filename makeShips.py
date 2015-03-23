@@ -80,11 +80,15 @@ class Battleships(QtGui.QWidget):
         """
         self.row = y
         self.column = x
-        self.shipCoords = self.generateShip(self.boatLengths[0])
         self.clearBtns()
         for l in self.boatCoords.values():
             for c in l:
                 self.colorBtn(c)
+        self.shipCoords = self.generateShip(self.boatLengths[0])
+
+        # Check if the coords are within the board
+        if self.checkBoundaries(self.shipCoords):
+            return
         for i in self.shipCoords:
             self.colorBtn(i)
 
@@ -173,10 +177,10 @@ class Battleships(QtGui.QWidget):
         """
         for i, j in coordList:
             if (i > 9 or i < 0) or (j > 10 or j < 0):
-                return False
+                return True
             for ship, coords in self.boatCoords.items():
                 if (i, j) in coords:
-                    return False
+                    return True
 
     def start(self):
 
