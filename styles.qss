@@ -45,6 +45,7 @@
 }
 #ShipHit {
     background-color: red;
+    color: white;
     margin: 0;
     width: 30px;
     height: 30px;
@@ -52,6 +53,7 @@
 }
 #Shot {
     background-color: darkblue;
+    color: white;
     margin: 0;
     width: 30px;
     height: 30px;
