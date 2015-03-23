@@ -55,8 +55,6 @@ class BSGame(QtGui.QWidget):
                 self.userBtnsDict[coord] = QtGui.QPushButton(str(row) + ":" + str(column))
                 self.userBtnsDict[coord].setStyleSheet(self.stylesheet)
                 self.userBtnsDict[coord].setObjectName('Tile')
-                # Connect the button to a _method_ where x and y are specified by using lambda
-                self.userBtnsDict[coord].clicked.connect(lambda c, x=row, y=column: self.placeShip(x, y))
                 self.grid.addWidget(self.userBtnsDict[coord], row, column)
 
         self.botsBtnsDict = {}
