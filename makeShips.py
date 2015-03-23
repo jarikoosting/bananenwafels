@@ -53,6 +53,9 @@ class Battleships(QtGui.QWidget):
         self.startGame.clicked.connect(self.start)
         #self.placeAllBtn.clicked.connect(self.setAllShips)
 
+        # Create label with game updates
+        self.feedback = QtGui.QLabel('', self)
+
         # Create a dictionary for buttons, and create 100 buttons for the board
         self.btnsDict = {}
         for row in range(10):
@@ -71,6 +74,7 @@ class Battleships(QtGui.QWidget):
         self.grid.addWidget(self.placeBtn, 1, 0)
         self.grid.addWidget(self.directionBtn, 2, 0)
         self.grid.addWidget(self.startGame, 0, 0)
+        self.grid.addWidget(self.feedback, 3, 0)
         self.show()
 
     def placeShip(self, x, y):
@@ -88,7 +92,9 @@ class Battleships(QtGui.QWidget):
 
         # Check if the coords are within the board
         if self.checkBoundaries(self.shipCoords):
+            self.feedback.setText("Ship can't be placed here.")
             return
+        self.feedback.setText('You can place your ship here.')
         for i in self.shipCoords:
             self.colorBtn(i)
 
@@ -111,12 +117,14 @@ class Battleships(QtGui.QWidget):
         Places the ship and its coordinates in a dictionary.
         """
         self.boatCoords[self.shipDic[self.boatLengths[0]]] = self.shipCoords
+        self.feedback.setText('Your ship is placed.')
         if len(self.boatLengths) >= 2:
             self.boatLengths.pop(0)
         elif len(self.boatLengths) == 1:
             self.boatLengths.pop(0)
             self.placeBtn.setEnabled(False)
             self.startGame.setEnabled(True)
+            self.feedback.setText('You can start the game!')
 
     def colorBtn(self, coord):
         """
