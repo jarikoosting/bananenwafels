@@ -94,7 +94,7 @@ class Battleships(QtGui.QWidget):
         if self.checkBoundaries(self.shipCoords):
             self.feedback.setText("Ship can't be placed here.")
             return
-        self.feedback.setText('You can place your ship here.')
+        self.feedback.setText('')
         for i in self.shipCoords:
             self.colorBtn(i)
 
