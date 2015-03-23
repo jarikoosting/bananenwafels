@@ -86,6 +86,8 @@ class BSGame(QtGui.QWidget):
             # Computers turn label
 
     def fire(self, x, y):
+        self.checkShips(x, y)
+
 
     def manageShips(self):
         """
@@ -103,35 +105,34 @@ class BSGame(QtGui.QWidget):
         self.userBtnsDict[coord].setObjectName('Ship')
         self.userBtnsDict[coord].setStyleSheet(self.stylesheet)
 
-    def checkShips(self):
+    def checkShips(self, x, y):
         """
         Check if a ship has been hit
         After placement, if the user clicks, it goes to this function!
         """
-        coords = {"Aircraft Carrier":[(9,2),(9,3),(9,4),(9,5)], "Battleship":[(1,1)]}
-        click = (self.row, self.column)
+        click = (x, y)
 
         # Loop through dictionary with ships and coords
-        for ship, coord in coords.items():
+        for ship, coord in self.botBoatCoordsBoat.items():
             for el in coord:
                 if click == el:
-                    coord.remove(el)
+                    self.botBoatCoordsBoat.remove(el)
 
                     # Check if ship is destroyed after the hit
-                    Battleships.checkDestroyed(self, coords)
+                    self.checkDestroyed(coords)
                     return True
 
         # None of the ships got a hit!
         return False
 
-    def checkDestroyed(self,coords):
+    def checkDestroyed(self):
         """
         Check if a ship is destroyed
         """
 
         # Return True when ship is destroyed
-        for ship, coord in coords.items():
-            if coords.get(ship) == []:
+        for ship, coord in self.botBoatCoords.items():
+            if self.botBoatCoords.get(ship) == []:
                 return ship, True
 
         # None of the ships are destroyed
