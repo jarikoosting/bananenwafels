@@ -140,7 +140,7 @@ class Battleships(QtGui.QWidget):
 
     def makeAIShips(self):
         """This function creates the ships for the Computer and validates them """
-        coordDic={}
+        coordDic = {}
         boatLength = [5, 4, 3, 3, 2]
 
         for ship in boatLength:
@@ -161,7 +161,7 @@ class Battleships(QtGui.QWidget):
 
             elif directionShip == "Vertical":
                 for j in range(ship):
-                    coordsList.append((int(startX)+ int(j), int(startY)))
+                    coordsList.append((int(startX) + int(j), int(startY)))
             coordDic[ship] = coordsList
         return coordDic
 
