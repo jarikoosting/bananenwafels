@@ -48,6 +48,7 @@ class Battleships(QtGui.QWidget):
         self.startGame = QtGui.QPushButton('Start Game!', self)
         self.startGame.setStyleSheet(self.stylesheet)
         self.startGame.setObjectName('MenuButton')
+        self.startGame.setEnabled(False)
         #self.placeAllBtn.clicked.connect(self.setAllShips)
 
         # Create a dictionary for buttons, and create 100 buttons for the board
@@ -87,7 +88,7 @@ class Battleships(QtGui.QWidget):
 
     def generateShip(self, boatLength):
         """
-        This function generates the coordinates for every boat, depending of the lenght.
+        This function generates the coordinates for every boat, depending of the length.
         """
         coordsList = []
         if self.directionBtn.text() == "Horizontal":
@@ -104,7 +105,12 @@ class Battleships(QtGui.QWidget):
         Places the ship and its coordinates in a dictionary.
         """
         self.boatCoords[self.shipDic[self.boatLengths[0]]] = self.shipCoords
-        self.boatLengths.pop(0)
+        if len(self.boatLengths) >= 2:
+            self.boatLengths.pop(0)
+        elif len(self.boatLengths) == 1:
+            self.boatLengths.pop(0)
+            self.placeBtn.setEnabled(False)
+            self.startGame.setEnabled(True)
 
     def colorBtn(self, coord):
         """
@@ -135,7 +141,7 @@ class Battleships(QtGui.QWidget):
     def makeAIShips(self):
         """This function creates the ships for the Computer and validates them """
         coordDic={}
-        boatLength = [5,4,3,3,2]
+        boatLength = [5, 4, 3, 3, 2]
 
         for ship in boatLength:
             coordsList = []
@@ -146,8 +152,8 @@ class Battleships(QtGui.QWidget):
             elif direction == 1:
                 directionShip = "Vertical"
 
-            startX = randrange(1,11)
-            startY = randrange(1,11)
+            startX = randrange(1, 11)
+            startY = randrange(1, 11)
 
             if directionShip == "Horizontal":
                 for i in range(ship):
@@ -167,7 +173,7 @@ class Battleships(QtGui.QWidget):
             if (i > 9 or i < 0) or (j > 10 or j < 0):
                 return False
             for ship, coords in self.boatCoords.items():
-                if (i,j) in coords:
+                if (i, j) in coords:
                     return False
 
     def checkShips(self):
@@ -175,8 +181,8 @@ class Battleships(QtGui.QWidget):
         Check if a ship has been hit
         After placement, if the user clicks, it goes to this function!
         """
-        coords = {"Aircraft Carrier":[(9,2),(9,3),(9,4),(9,5)], "Battleship":[(1,1)]}
-        click = (self.row,self.column)
+        coords = {"Aircraft Carrier": [(9, 2), (9, 3), (9, 4), (9, 5)], "Battleship": [(1, 1)]}
+        click = (self.row, self.column)
 
         # Loop through dictionary with ships and coords
         for ship, coord in coords.items():
@@ -185,7 +191,7 @@ class Battleships(QtGui.QWidget):
                     coord.remove(el)
 
                     # Check if ship is destroyed after the hit
-                    Battleships.checkDestroyed(self, coords)
+                    self.checkDestroyed(coords)
                     return True
 
         # None of the ships got a hit!
