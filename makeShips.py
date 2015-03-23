@@ -198,40 +198,6 @@ class Battleships(QtGui.QWidget):
         # Go to the game
         playGame.BSGame(self.boatCoords)
 
-    def checkShips(self):
-        """
-        Check if a ship has been hit
-        After placement, if the user clicks, it goes to this function!
-        """
-        coords = {"Aircraft Carrier": [(9, 2), (9, 3), (9, 4), (9, 5)], "Battleship": [(1, 1)]}
-        click = (self.row, self.column)
-
-        # Loop through dictionary with ships and coords
-        for ship, coord in coords.items():
-            for el in coord:
-                if click == el:
-                    coord.remove(el)
-
-                    # Check if ship is destroyed after the hit
-                    self.checkDestroyed(coords)
-                    return True
-
-        # None of the ships got a hit!
-        return False
-
-    def checkDestroyed(self,coords):
-        """
-        Check if a ship is destroyed
-        """
-
-        # Return True when ship is destroyed
-        for ship, coord in coords.items():
-            if coords.get(ship) == []:
-                return ship, True
-
-        # None of the ships are destroyed
-        return False
-
 if __name__ == '__main__':
     app = QtGui.QApplication(sys.argv)
     game = Battleships()
