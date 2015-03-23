@@ -3,6 +3,7 @@
 from PyQt4 import QtGui, QtCore
 import os, sys
 import time
+from random import randrange
 
 
 class BSGame(QtGui.QWidget):
@@ -86,7 +87,7 @@ class BSGame(QtGui.QWidget):
 
             # Computers turn label
 
-            self.fire(self.row, self.column)
+            print("Hoi")
 
     def fire(self, x, y):
         self.checkShips(x, y, self.botBoatCoords)
@@ -123,26 +124,30 @@ class BSGame(QtGui.QWidget):
         After placement, if the user clicks, it goes to this function!
         """
         click = (x, y)
+        print(coords)
 
         # Loop through dictionary with ships and coords
         for ship, coord in coords.items():
             for el in coord:
                 if click == el:
 
-                    self.botsBtnsDict[click].setObjectName('ShipHit')
-                    self.botsBtnsDict[click].setStyleSheet(self.stylesheet)
+                    #coords[el].setObjectName('ShipHit')
+                    #coords[el].setStyleSheet(self.stylesheet)
+
+                    print("RAAK!")
                     coord.remove(el)
 
                     # Check if ship is destroyed after the hit
-                    self.checkDestroyed()
+                    self.checkDestroyed(coords)
                     return True
 
         # None of the ships got a hit!
-        self.botsBtnsDict[click].setObjectName('Shot')
-        self.botsBtnsDict[click].setStyleSheet(self.stylesheet)
+        print("MIS!")
+        #coords[click].setObjectName('Shot')
+        #coords[click].setStyleSheet(self.stylesheet)
         return False
 
-    def checkDestroyed(self):
+    def checkDestroyed(self, coords):
         """
         Check if a ship is destroyed
         """
