@@ -38,6 +38,7 @@ class Battleships(QtGui.QWidget):
         self.placeBtn.setObjectName('MenuButton')
         self.placeBtn.setStyleSheet(self.stylesheet)
         self.placeBtn.clicked.connect(self.submitShip)
+        self.placeBtn.setEnabled(False)
 
         # Create button for placing ships vertically or horizontally
         self.directionBtn = QtGui.QPushButton('Horizontal', self)
@@ -94,6 +95,7 @@ class Battleships(QtGui.QWidget):
         if self.checkBoundaries(self.shipCoords):
             self.feedback.setText("Ship can't be placed here.")
             return
+        self.placeBtn.setEnabled(True)
         self.feedback.setText('')
         for i in self.shipCoords:
             self.colorBtn(i)
@@ -125,6 +127,8 @@ class Battleships(QtGui.QWidget):
             self.placeBtn.setEnabled(False)
             self.startGame.setEnabled(True)
             self.feedback.setText('You can start the game!')
+        else:
+            #feedback met label
 
     def colorBtn(self, coord):
         """
