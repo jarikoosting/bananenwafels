@@ -27,7 +27,7 @@
 #StartAlign {
     qproperty-alignment: AlignCenter;
 }
-#Tile{
+#Tile {
     background-color: dodgerblue;
     margin: 0;
     height: 30px;
@@ -35,13 +35,24 @@
     color: white;
     border-radius: 15px;
 }
-#Tile:hover{
-    background-color: darkblue;
-}
 #Ship {
+    background-color: green;
+    margin: 0;
+    color: white;
+    width: 30px;
+    height: 30px;
+    border-radius: 15px;
+}
+#ShipHit {
     background-color: red;
     margin: 0;
-    color: black;
+    width: 30px;
+    height: 30px;
+    border-radius: 15px;
+}
+#Shot {
+    background-color: darkblue;
+    margin: 0;
     width: 30px;
     height: 30px;
     border-radius: 15px;
