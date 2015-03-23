@@ -5,11 +5,12 @@ import os, sys
 
 
 class BSGame(QtGui.QWidget):
-    def __init__(self):
+    def __init__(self, boatCoordinates):
         """
         Constructs a Battleship game object, with which the user can play a game.
         """
         super(BSGame, self).__init__()
+        self.boatCoords = boatCoordinates
         self.initUI()
 
     def initUI(self):
@@ -63,7 +64,24 @@ class BSGame(QtGui.QWidget):
         # Add other buttons to grid
         self.grid.addWidget(self.userLabel, 0, 0)
         self.grid.addWidget(self.botLabel, 0, 11)
+        self.manageShips()
         self.show()
+
+    def manageShips(self):
+        """
+        This function does all the work. If a button is pressed, it generates the coordinates for a ship and makes
+        the surrounding buttons red.
+        """
+        for l in self.boatCoords.values():
+            for c in l:
+                self.colorBtn(c)
+
+    def colorBtn(self, coord):
+        """
+        Colors buttons red or white.
+        """
+        self.userBtnsDict[coord].setObjectName('Ship')
+        self.userBtnsDict[coord].setStyleSheet(self.stylesheet)
 
     def checkShips(self):
         """

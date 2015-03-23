@@ -3,6 +3,7 @@
 from PyQt4 import QtGui, QtCore
 import os, sys
 from random import randrange
+import playGame
 
 class Battleships(QtGui.QWidget):
     def __init__(self):
@@ -49,6 +50,7 @@ class Battleships(QtGui.QWidget):
         self.startGame.setStyleSheet(self.stylesheet)
         self.startGame.setObjectName('MenuButton')
         self.startGame.setEnabled(False)
+        self.startGame.clicked.connect(self.start)
         #self.placeAllBtn.clicked.connect(self.setAllShips)
 
         # Create a dictionary for buttons, and create 100 buttons for the board
@@ -175,6 +177,14 @@ class Battleships(QtGui.QWidget):
             for ship, coords in self.boatCoords.items():
                 if (i, j) in coords:
                     return False
+
+    def start(self):
+
+        # Close the window
+        self.close()
+
+        # Go to the game
+        playGame.BSGame(self.boatCoords)
 
     def checkShips(self):
         """
