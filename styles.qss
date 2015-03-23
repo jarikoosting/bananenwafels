@@ -2,7 +2,7 @@
     background-color: orange;
     margin: 0;
     height: 30px;
-    width: 150px;
+    width: 180px;
     border-radius: 5px;
     border-bottom: 4px solid #CD6839;
     margin-right: 15px;
@@ -56,4 +56,8 @@
     width: 30px;
     height: 30px;
     border-radius: 15px;
+}
+#FeedbackLabel {
+    width: 150px;
+    color: red;
 }
