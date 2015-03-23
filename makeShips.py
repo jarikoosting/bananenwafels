@@ -188,7 +188,7 @@ class Battleships(QtGui.QWidget):
                 self.boatAICoords[boatLength[0]] = coordsList
                 boatLength.pop(0)
 
-    def checkAIboundaries(l, dv):
+    def checkAIboundaries(self, l, dv):
         for i in l:
             if (i[0] > 9) or (i[1] > 9):
                 return False
