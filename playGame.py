@@ -90,10 +90,10 @@ class BSGame(QtGui.QWidget):
             print("Hoi")
 
     def fire(self, x, y):
-        self.checkShips(x, y, self.botBoatCoords)
+        self.checkShips(x, y, self.botBoatCoords, self.botsBtnsDict)
         autox, autoy = self.randomShoot()
         time.sleep(1)
-        self.checkShips(autox, autoy, self.usrBoatCoords)
+        self.checkShips(autox, autoy, self.usrBoatCoords, self.userBtnsDict)
 
     def randomShoot(self):
         """
@@ -118,7 +118,7 @@ class BSGame(QtGui.QWidget):
         self.userBtnsDict[coord].setObjectName('Ship')
         self.userBtnsDict[coord].setStyleSheet(self.stylesheet)
 
-    def checkShips(self, x, y, coords):
+    def checkShips(self, x, y, coords, field):
         """
         Check if a ship has been hit
         After placement, if the user clicks, it goes to this function!
@@ -131,10 +131,8 @@ class BSGame(QtGui.QWidget):
             for el in coord:
                 if click == el:
 
-                    #coords[el].setObjectName('ShipHit')
-                    #coords[el].setStyleSheet(self.stylesheet)
-
-                    print("RAAK!")
+                    field[el].setObjectName('ShipHit')
+                    field[el].setStyleSheet(self.stylesheet)
                     coord.remove(el)
 
                     # Check if ship is destroyed after the hit
@@ -142,9 +140,8 @@ class BSGame(QtGui.QWidget):
                     return True
 
         # None of the ships got a hit!
-        print("MIS!")
-        #coords[click].setObjectName('Shot')
-        #coords[click].setStyleSheet(self.stylesheet)
+        field[click].setObjectName('Shot')
+        field[click].setStyleSheet(self.stylesheet)
         return False
 
     def checkDestroyed(self, coords):
