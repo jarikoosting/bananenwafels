@@ -31,24 +31,16 @@ class BSGame(QtGui.QWidget):
         # Read QSS file for styles
         self.stylesheet = open(os.getcwd() + '/styles.qss').read()
 
-        # Create button for placing ships
-        self.userLabel = QtGui.QLabel('Users Field')
-        self.userLabel.setObjectName('UserLabel')
-        self.userLabel.setStyleSheet(self.stylesheet)
+        # Create label for the user field
+        self.userLabel = QtGui.QLabel('Your field:')
 
-        self.botLabel = QtGui.QLabel('Bots Field')
-        self.botLabel.setObjectName('UserLabel')
-        self.botLabel.setStyleSheet(self.stylesheet)
+        # Create label for the bot field
+        self.botLabel = QtGui.QLabel('Enemy field:')
 
-        # Feedback with AI actions
-        self.botFeedback = QtGui.QLabel('')
-        self.botFeedback.setObjectName('FeedbackLabel')
-        self.botFeedback.setStyleSheet(self.stylesheet)
-
-        # Feedback with User actions
-        self.userFeedback = QtGui.QLabel('')
-        self.userFeedback.setObjectName('FeedbackLabel')
-        self.userFeedback.setStyleSheet(self.stylesheet)
+        # Feedback with actions
+        self.feedbackLabel = QtGui.QLabel('')
+        self.feedbackLabel.setObjectName('FeedbackLabel')
+        self.feedbackLabel.setStyleSheet(self.stylesheet)
 
         # Create a dictionary for buttons, and create 100 buttons for the board
         self.userBtnsDict = {}
@@ -77,16 +69,16 @@ class BSGame(QtGui.QWidget):
         # Add other buttons to grid
         self.grid.addWidget(self.userLabel, 0, 0)
         self.grid.addWidget(self.botLabel, 0, 11)
-        self.grid.addWidget(self.userFeedback, 4, 0)
-        self.grid.addWidget(self.botFeedback, 4, 11)
+        self.grid.addWidget(self.feedbackLabel, 4, 11)
         self.manageShips()
         self.show()
 
     def fire(self, x, y):
-        self.checkShips(x, y, self.botBoatCoords, self.botsBtnsDict)
+        self.feedbackLabel.setText('')
+        self.checkShips(x, y, self.botBoatCoords, self.botsBtnsDict, 'You')
         autox, autoy = self.randomShoot()
         time.sleep(1)
-        self.checkShips(autox, autoy, self.usrBoatCoords, self.userBtnsDict)
+        self.checkShips(autox, autoy, self.usrBoatCoords, self.userBtnsDict, 'Computer')
 
         if self.botBoatCoords == {} or self.usrBoatCoords == {}:
             self.btnRestart = QtGui.QLabel('Restart Game')
@@ -118,7 +110,7 @@ class BSGame(QtGui.QWidget):
         self.userBtnsDict[coord].setObjectName('Ship')
         self.userBtnsDict[coord].setStyleSheet(self.stylesheet)
 
-    def checkShips(self, x, y, coords, field):
+    def checkShips(self, x, y, coords, field, name):
         """
         Check if a ship has been hit
         After placement, if the user clicks, it goes to this function!
@@ -134,7 +126,7 @@ class BSGame(QtGui.QWidget):
                     coord.remove(el)
 
                     # Check if ship is destroyed after the hit
-                    self.checkDestroyed(coords)
+                    self.checkDestroyed(coords, name)
                     return True
 
         # None of the ships got a hit!
@@ -142,7 +134,7 @@ class BSGame(QtGui.QWidget):
         field[click].setStyleSheet(self.stylesheet)
         return False
 
-    def checkDestroyed(self, coords):
+    def checkDestroyed(self, coords, name):
         """
         Check if a ship is destroyed
         """
@@ -150,6 +142,10 @@ class BSGame(QtGui.QWidget):
         # Return True when ship is destroyed
         for ship, coord in coords.items():
             if coords.get(ship) == []:
+
+                # Feedback
+                self.feedbackLabel.setText(str(name) + ' destroyed a ship')
+
                 del coords[ship]
                 return
 

@@ -60,6 +60,6 @@
     border-radius: 15px;
 }
 #FeedbackLabel {
-    width: 150px;
+    width: 175px;
     color: red;
 }
