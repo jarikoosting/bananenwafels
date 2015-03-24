@@ -100,7 +100,7 @@ class BSGame(QtGui.QWidget):
         Function that generates random coordinations.
         Needs randrange() from random module.
         """
-        return randrange(10), randrange(10)
+        return randrange(10), randrange(1,10)
 
     def manageShips(self):
         """
