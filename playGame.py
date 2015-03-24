@@ -4,6 +4,7 @@ from PyQt4 import QtGui, QtCore
 import os, sys
 import time
 from random import randrange
+import makeShips
 
 
 class BSGame(QtGui.QWidget):
@@ -81,19 +82,18 @@ class BSGame(QtGui.QWidget):
         self.manageShips()
         self.show()
 
-    def playing(self):
-        while self.botBoatCoords != {} or self.usrBoatCoords != {}:
-            # Your turn label
-
-            # Computers turn label
-
-            print("Hoi")
-
     def fire(self, x, y):
         self.checkShips(x, y, self.botBoatCoords, self.botsBtnsDict)
         autox, autoy = self.randomShoot()
         time.sleep(1)
         self.checkShips(autox, autoy, self.usrBoatCoords, self.userBtnsDict)
+
+        if self.botBoatCoords == {} or self.usrBoatCoords == {}:
+            self.btnRestart = QtGui.QLabel('Restart Game')
+            self.btnRestart.setObjectName('MenuButton')
+            self.btnRestart.setStyleSheet(self.stylesheet)
+            self.grid.addWidget(self.btnRestart, 12, 11)
+            self.button.clicked.connect(self.restart)
 
     def randomShoot(self):
         """
@@ -124,7 +124,6 @@ class BSGame(QtGui.QWidget):
         After placement, if the user clicks, it goes to this function!
         """
         click = (x, y)
-        print(coords)
 
         # Loop through dictionary with ships and coords
         for ship, coord in coords.items():
@@ -151,11 +150,11 @@ class BSGame(QtGui.QWidget):
         # Return True when ship is destroyed
         for ship, coord in coords.items():
             if coords.get(ship) == []:
-                # LABEL SHIP IS DESTROYED
-                return ship, True
+                del coords[ship]
+                return
 
         # None of the ships are destroyed
-        return False
+        return
 
     def createWords(self):
         self.words2=[]
@@ -176,6 +175,12 @@ class BSGame(QtGui.QWidget):
                     self.words5.append(woord)
                 else:
                     return
+
+    def restart(self):
+
+        self.close()
+
+        makeShips.Battleships()
 
 if __name__ == '__main__':
     app = QtGui.QApplication(sys.argv)
