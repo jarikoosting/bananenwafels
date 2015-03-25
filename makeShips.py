@@ -1,4 +1,6 @@
 #!/opt/local/bin/python3.4
+# voor linux
+#!/usr/bin/env python
 
 from PyQt4 import QtGui, QtCore
 import os, sys
