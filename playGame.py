@@ -175,8 +175,7 @@ class BSGame(QtGui.QWidget):
         self.words5=[]
         with open('words.txt') as in_f:
             for line in in_f:
-                x = line.split('\n')
-                woord=x[0]
+                woord = line.replace('\n', ' ').strip()
                 if len(woord) == 2:
                     self.words2.append(woord)
                 elif len(woord) == 3:
@@ -185,8 +184,6 @@ class BSGame(QtGui.QWidget):
                     self.words4.append(woord)
                 elif len(woord) == 5:
                     self.words5.append(woord)
-                else:
-                    return
 
     def restart(self):
 
