@@ -77,7 +77,6 @@ class BSGame(QtGui.QWidget):
         self.feedbackLabel.setText('')
         self.checkShips(x, y, self.botBoatCoords, self.botsBtnsDict, 'You')
         autox, autoy = self.randomShoot()
-        time.sleep(1)
         self.checkShips(autox, autoy, self.usrBoatCoords, self.userBtnsDict, 'Computer')
 
         if self.botBoatCoords == {} or self.usrBoatCoords == {}:
