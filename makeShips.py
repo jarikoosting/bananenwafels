@@ -5,6 +5,7 @@ import os, sys
 from random import randrange
 import playGame
 
+
 class Battleships(QtGui.QWidget):
     def __init__(self):
         """
