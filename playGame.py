@@ -81,11 +81,11 @@ class BSGame(QtGui.QWidget):
         self.checkShips(autox, autoy, self.usrBoatCoords, self.userBtnsDict, 'Computer')
 
         if self.botBoatCoords == {} or self.usrBoatCoords == {}:
-            self.btnRestart = QtGui.QLabel('Restart Game')
+            self.btnRestart = QtGui.QPushButton('Restart Game')
             self.btnRestart.setObjectName('MenuButton')
             self.btnRestart.setStyleSheet(self.stylesheet)
             self.grid.addWidget(self.btnRestart, 12, 11)
-            self.button.clicked.connect(self.restart)
+            self.btnRestart.clicked.connect(self.restart)
 
     def randomShoot(self):
         """
@@ -174,9 +174,10 @@ class BSGame(QtGui.QWidget):
 
     def restart(self):
 
+        makeShips.Battleships()
+
         self.close()
 
-        makeShips.Battleships()
 
 if __name__ == '__main__':
     app = QtGui.QApplication(sys.argv)
