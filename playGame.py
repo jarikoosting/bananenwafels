@@ -79,10 +79,11 @@ class BSGame(QtGui.QWidget):
         self.feedbackLabel.setText('')
         self.checkShips(x, y, self.botBoatCoords, self.botsBtnsDict, 'You')
         autox, autoy = self.randomShoot()
-        print(autox, autoy)
         self.checkShips(autox, autoy, self.usrBoatCoords, self.userBtnsDict, 'Computer')
 
         if self.botBoatCoords == {} or self.usrBoatCoords == {}:
+            for b in self.botsBtnsDict:
+                    self.btnsDict[b].setEnabled(False)
             self.btnRestart = QtGui.QPushButton('Restart Game')
             self.btnRestart.setObjectName('MenuButton')
             self.btnRestart.setStyleSheet(self.stylesheet)
@@ -107,8 +108,6 @@ class BSGame(QtGui.QWidget):
             return 1
         else:
             return 2
-
-
 
     def manageShips(self):
         """
@@ -180,7 +179,7 @@ class BSGame(QtGui.QWidget):
                     self.words2.append(woord)
                 elif len(woord) == 3:
                     self.words3.append(woord)
-                elif len(woord)== 4:
+                elif len(woord) == 4:
                     self.words4.append(woord)
                 elif len(woord) == 5:
                     self.words5.append(woord)

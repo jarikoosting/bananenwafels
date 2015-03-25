@@ -32,12 +32,11 @@ class Battleships(QtGui.QWidget):
         # Create a dictonairy with ships, an empty dictonairy for ships with coords and a list for the lengts of the
         # boats.
 
-        self.shipDic = {5: "Aircraft Carrier", 4: "Battleship", 3: "Submarine", 3.4: "andere boot", 2: "Patrol Boat"}
+        self.shipDic = {5: "Aircraft Carrier", 4: "Battleship", 3: "Submarine", 3.4: "Destroyer", 2: "Patrol Boat"}
         #self.shipDic = {"Aircraft": 5, "Battleship" :4 , "Submarine":3, "Andere boot" : 3, "Patrol Boat": 2}
         self.boatCoords = {}
         self.boatLengths = list(self.shipDic.keys())
         self.boatLengths.sort()
-        print(self.boatLengths)
 
         # Create button for placing ships
         self.placeBtn = QtGui.QPushButton('Place Ship!', self)
@@ -196,7 +195,7 @@ class Battleships(QtGui.QWidget):
 
             elif directionShip == "Vertical":
                 for j in range(boatLength[0]):
-                    coordsList.append((int(startX)+ int(j), int(startY)))
+                    coordsList.append((int(startX) + int(j), int(startY)))
 
             if self.checkAIboundaries(coordsList, self.boatAICoords.values()):
                 self.boatAICoords[boatLength[0]] = coordsList
