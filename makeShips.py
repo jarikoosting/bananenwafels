@@ -31,9 +31,13 @@ class Battleships(QtGui.QWidget):
 
         # Create a dictonairy with ships, an empty dictonairy for ships with coords and a list for the lengts of the
         # boats.
-        self.shipDic = {5: "Aircraft Carrier", 4: "Battleship", 3: "Submarine", 2: "Patrol Boat"}
+
+        #self.shipDic = {5: "Aircraft Carrier", 4: "Battleship", 3: "Submarine", 3.4: "andere boot", 2: "Patrol Boat"}
+        self.shipDic = {"Aircraft": 5, "Battleship" :4 , "Submarine":3, "Andere boot" : 3, "Patrol Boat": 2}
         self.boatCoords = {}
-        self.boatLengths = list(self.shipDic.keys())
+        self.boatLengths = list(self.shipDic.values())
+        self.boatLengths.sort()
+        print(self.boatLengths)
 
         # Create button for placing ships
         self.placeBtn = QtGui.QPushButton('Place Ship!', self)
@@ -122,7 +126,8 @@ class Battleships(QtGui.QWidget):
         Places the ship and its coordinates in a dictionary.
         """
         if self.shipCoords != []:
-            self.boatCoords[self.shipDic[self.boatLengths[0]]] = self.shipCoords
+            #self.boatCoords[self.shipDic[self.boatLengths[0]]] = self.shipCoords
+            self.boatCoords[self.shipCoords] = self.shipDic[self.boatLengths[0]]
             self.feedback.setText('Your ship is placed.')
             self.shipCoords = []
             if len(self.boatLengths) >= 2:
