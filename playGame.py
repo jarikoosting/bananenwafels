@@ -28,6 +28,8 @@ class BSGame(QtGui.QWidget):
         self.grid = QtGui.QGridLayout()
         self.setLayout(self.grid)
 
+        self.firedCoords = []
+
         # Read QSS file for styles
         self.stylesheet = open(os.getcwd() + '/styles.qss').read()
 
@@ -77,6 +79,7 @@ class BSGame(QtGui.QWidget):
         self.feedbackLabel.setText('')
         self.checkShips(x, y, self.botBoatCoords, self.botsBtnsDict, 'You')
         autox, autoy = self.randomShoot()
+        print(autox, autoy)
         self.checkShips(autox, autoy, self.usrBoatCoords, self.userBtnsDict, 'Computer')
 
         if self.botBoatCoords == {} or self.usrBoatCoords == {}:
@@ -91,7 +94,21 @@ class BSGame(QtGui.QWidget):
         Function that generates random coordinations.
         Needs randrange() from random module.
         """
-        return randrange(10), randrange(1,10)
+        c = 1
+        while c == 1:
+            coord = (randrange(10), randrange(1,11))
+            c = self.checkCoord(coord)
+            if c == 2:
+                self.firedCoords.append(coord)
+                return coord[0], coord[1]
+
+    def checkCoord(self, coord):
+        if coord in self.firedCoords:
+            return 1
+        else:
+            return 2
+
+
 
     def manageShips(self):
         """
