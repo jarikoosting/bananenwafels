@@ -53,7 +53,6 @@ class Battleships(QtGui.QWidget):
 
         # Create a dictonairy with ships, an empty dictonairy for ships with coords and a list for the lengts of the
         # boats.
-
         self.shipDic = {5: ("Aircraft Carrier", word5), 4: ("Battleship", word4), 3: ("Submarine", word3), 3.4: ("Destroyer", word3_5), 2: ("Patrol Boat", word2)}
         self.boatCoords = {}
         self.boatLengths = list(self.shipDic.keys())
@@ -215,7 +214,7 @@ class Battleships(QtGui.QWidget):
 
             elif directionShip == "Vertical":
                 for j in range(boatLength[0]):
-                    coordsList.append((int(startX)+ int(j), int(startY)))
+                    coordsList.append((int(startX) + int(j), int(startY)))
 
             if self.checkAIboundaries(coordsList, self.boatAICoords.values()):
                 self.boatAICoords[boatLength[0]] = coordsList

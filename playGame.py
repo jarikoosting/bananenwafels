@@ -82,6 +82,8 @@ class BSGame(QtGui.QWidget):
         self.checkShips(autox, autoy, self.usrBoatCoords, self.userBtnsDict, 'Computer')
 
         if self.botBoatCoords == {} or self.usrBoatCoords == {}:
+            for b in self.botsBtnsDict:
+                    self.btnsDict[b].setEnabled(False)
             self.btnRestart = QtGui.QPushButton('Restart Game')
             self.btnRestart.setObjectName('MenuButton')
             self.btnRestart.setStyleSheet(self.stylesheet)
