@@ -79,7 +79,6 @@ class BSGame(QtGui.QWidget):
         self.feedbackLabel.setText('')
         self.checkShips(x, y, self.botBoatCoords, self.botsBtnsDict, 'You')
         autox, autoy = self.randomShoot()
-        print(autox, autoy)
         self.checkShips(autox, autoy, self.usrBoatCoords, self.userBtnsDict, 'Computer')
 
         if self.botBoatCoords == {} or self.usrBoatCoords == {}:
@@ -108,8 +107,6 @@ class BSGame(QtGui.QWidget):
         else:
             return 2
 
-
-
     def manageShips(self):
         """
         This function does all the work. If a button is pressed, it generates the coordinates for a ship and makes
@@ -132,17 +129,25 @@ class BSGame(QtGui.QWidget):
         After placement, if the user clicks, it goes to this function!
         """
         click = (x, y)
-
         # Loop through dictionary with ships and coords
         for ship, coord in coords.items():
             for el in coord:
+                length = len(coord)
+                print(length)
                 if click == el:
                     field[el].setObjectName('ShipHit')
                     field[el].setStyleSheet(self.stylesheet)
+                    indexing = coord.index(el)
+                    print(indexing)
+                    if ship[1]:
+                        woord = ship[1]
+                        print(woord)
+                    else:
+                        pass
                     coord.remove(el)
-
                     # Check if ship is destroyed after the hit
                     self.checkDestroyed(coords, name)
+
                     return True
 
         # None of the ships got a hit!
@@ -167,23 +172,6 @@ class BSGame(QtGui.QWidget):
 
         # None of the ships are destroyed
         return
-
-    def createWords(self):
-        self.words2=[]
-        self.words3=[]
-        self.words4=[]
-        self.words5=[]
-        with open('words.txt') as in_f:
-            for line in in_f:
-                woord = line.replace('\n', ' ').strip()
-                if len(woord) == 2:
-                    self.words2.append(woord)
-                elif len(woord) == 3:
-                    self.words3.append(woord)
-                elif len(woord)== 4:
-                    self.words4.append(woord)
-                elif len(woord) == 5:
-                    self.words5.append(woord)
 
     def restart(self):
 
