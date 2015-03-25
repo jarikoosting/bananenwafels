@@ -26,18 +26,38 @@ class Battleships(QtGui.QWidget):
         self.grid = QtGui.QGridLayout()
         self.setLayout(self.grid)
 
+        words2=[]
+        words3=[]
+        words4=[]
+        words5=[]
+        with open('words.txt') as in_f:
+            for line in in_f:
+                woord = line.replace('\n', ' ').strip()
+                if len(woord) == 2:
+                    words2.append(woord)
+                elif len(woord) == 3:
+                    words3.append(woord)
+                elif len(woord)== 4:
+                    words4.append(woord)
+                elif len(woord) == 5:
+                    words5.append(woord)
+
+        word5 = words5[randrange(len(words5))]
+        word4 = words4[randrange(len(words4))]
+        word3 = words3[randrange(len(words3))]
+        word3_5 = words3[randrange(len(words3))]
+        word2 = words2[randrange(len(words2))]
+
         # Read QSS file for styles
         self.stylesheet = open(os.getcwd() + '/styles.qss').read()
 
         # Create a dictonairy with ships, an empty dictonairy for ships with coords and a list for the lengts of the
         # boats.
 
-        self.shipDic = {5: "Aircraft Carrier", 4: "Battleship", 3: "Submarine", 3.4: "andere boot", 2: "Patrol Boat"}
-        #self.shipDic = {"Aircraft": 5, "Battleship" :4 , "Submarine":3, "Andere boot" : 3, "Patrol Boat": 2}
+        self.shipDic = {5: ("Aircraft Carrier", word5), 4: ("Battleship", word4), 3: ("Submarine", word3), 3.4: ("Destroyer", word3_5), 2: ("Patrol Boat", word2)}
         self.boatCoords = {}
         self.boatLengths = list(self.shipDic.keys())
         self.boatLengths.sort()
-        print(self.boatLengths)
 
         # Create button for placing ships
         self.placeBtn = QtGui.QPushButton('Place Ship!', self)
@@ -127,7 +147,6 @@ class Battleships(QtGui.QWidget):
         """
         if self.shipCoords != []:
             self.boatCoords[self.shipDic[self.boatLengths[0]]] = self.shipCoords
-            #self.boatCoords[self.shipCoords] = self.shipDic[self.boatLengths[0]]
             self.feedback.setText('Your ship is placed.')
             self.shipCoords = []
             if len(self.boatLengths) >= 2:
@@ -176,7 +195,7 @@ class Battleships(QtGui.QWidget):
     def makeAIShips(self):
         """This function creates the ships for the Computer and validates them """
         self.boatAICoords={}
-        boatLength = [5,4,3,3,2]
+        boatLength = [5, 4 ,3 ,3 ,2]
 
         while boatLength != []:
             coordsList = []
@@ -224,6 +243,8 @@ class Battleships(QtGui.QWidget):
             for ship, coords in self.boatCoords.items():
                 if (i, j) in coords:
                     return True
+
+
 
     def start(self):
 
