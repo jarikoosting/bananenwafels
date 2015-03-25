@@ -124,16 +124,19 @@ class Battleships(QtGui.QWidget):
         if self.shipCoords != []:
             self.boatCoords[self.shipDic[self.boatLengths[0]]] = self.shipCoords
             self.feedback.setText('Your ship is placed.')
+            self.shipCoords = []
             if len(self.boatLengths) >= 2:
                 self.boatLengths.pop(0)
             elif len(self.boatLengths) == 1:
                 self.boatLengths.pop(0)
                 self.placeBtn.setEnabled(False)
                 self.startGame.setEnabled(True)
+                for b in self.btnsDict:
+                    self.btnsDict[b].setEnabled(False)
                 self.feedback.setText('You can start the game!')
         else:
             # Place ship again
-            self.feedback.setText('Place ship again.')
+            self.feedback.setText('Please place your ship.')
 
     def colorBtn(self, coord):
         """
@@ -141,6 +144,11 @@ class Battleships(QtGui.QWidget):
         """
         self.btnsDict[coord].setObjectName('Ship')
         self.btnsDict[coord].setStyleSheet(self.stylesheet)
+
+    def removeCoords(self):
+        for b in self.shipCoords:
+            self.btnsDict[b].setObjectName('Tile')
+            self.btnsDict[b].setStyleSheet(self.stylesheet)
 
     def clearBtns(self):
         """
@@ -158,8 +166,7 @@ class Battleships(QtGui.QWidget):
             self.directionBtn.setText("Vertical")
         else:
             self.directionBtn.setText("Horizontal")
-        for i in self.shipCoords:
-            self.colorBtn(i)
+        self.removeCoords()
 
     def makeAIShips(self):
         """This function creates the ships for the Computer and validates them """
