@@ -239,6 +239,7 @@ class Battleships(QtGui.QWidget):
                 self.boatAICoords[boatLength[0]] = coordsList
                 boatLength.pop(0)
                 listwords.pop(0)
+        print(self.boatAICoords)
         return self.boatAICoords
 
     def checkAIboundaries(self, l, dv):
@@ -246,11 +247,14 @@ class Battleships(QtGui.QWidget):
         Check if coords are within the playboard.
         """
         for i in l:
+            print("i is,",i[:2])
             if (i[0] > 9) or (i[1] > 21):
                 return False
             for coords in dv:
                 for x, y, p in coords:
-                    if (x,y) in l:
+                    print("x&y is:,",(x,y))
+                    if (x,y) in i[:2]:
+                        print("dubbel!")
                         return False
         return True
 
