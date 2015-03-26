@@ -175,7 +175,11 @@ class Battleships(QtGui.QWidget):
         """
         This function creates the ships and words for the Computer and validates them
         """
-        words2 = words3 = words4 = words5 = []
+        words2 = []
+        words3 = []
+        words4 = []
+        words5 = []
+        listwords = []
 
         with open('words.txt') as in_f:
             for line in in_f:
@@ -194,7 +198,6 @@ class Battleships(QtGui.QWidget):
         word3 = words3[randrange(len(words3))]
         word3_5 = words3[randrange(len(words3))]
         word2 = words2[randrange(len(words2))]
-        listwords = []
         listwords.append(word5)
         listwords.append(word4)
         listwords.append(word3)
