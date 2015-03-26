@@ -199,7 +199,7 @@ class Battleships(QtGui.QWidget):
         listwords.append(words3[randrange(len(words3))])
         listwords.append(words2[randrange(len(words2))])
         print(listwords)
-        self.boatAICoords={}
+        self.boatAICoords = {}
         boatLength = [5, 4, 3, 3, 2]
 
         while boatLength != []:

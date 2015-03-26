@@ -139,17 +139,13 @@ class BSGame(QtGui.QWidget):
                 if click == el:
                     field[el].setObjectName('ShipHit')
                     field[el].setStyleSheet(self.stylesheet)
-                    indexing = coord.index(el)
-                    print("de index van de coordinaat is: ", indexing)
-                    try:
-                        woord = ship[1]
-                        print("Het woord dat hierbij past is:", woord)
-                        for i in woord:
-                            letter = woord[indexing +1]
-                            print(letter)
-
-                    except:
-                        pass
+                    if name == "You":
+                        ndx = coord.index(el)
+                        print("de index van de coordinaat is: ", ndx)
+                        print("Het hele woord", ship[1])
+                        letter = ship[1][ndx]
+                        print("De letter die hierbij past is:", letter)
+                        self.botsBtnsDict[click] = QtGui.QPushButton(letter)
                     coord.remove(el)
                     # Check if ship is destroyed after the hit
                     self.checkDestroyed(coords, name)
@@ -168,7 +164,7 @@ class BSGame(QtGui.QWidget):
 
         # Return True when ship is destroyed
         for ship, coord in coords.items():
-            if coords.get(ship) == []:
+            if set(coords.get(ship)) == set(self.hit):
 
                 # Feedback
                 self.feedbackLabel.setText(str(name) + ' destroyed a ship')
