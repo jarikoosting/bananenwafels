@@ -193,16 +193,11 @@ class Battleships(QtGui.QWidget):
                 elif len(woord) == 5:
                     words5.append(woord)
 
-        word5 = words5[randrange(len(words5))]
-        word4 = words4[randrange(len(words4))]
-        word3 = words3[randrange(len(words3))]
-        word3_5 = words3[randrange(len(words3))]
-        word2 = words2[randrange(len(words2))]
-        listwords.append(word5)
-        listwords.append(word4)
-        listwords.append(word3)
-        listwords.append(word3_5)
-        listwords.append(word2)
+        listwords.append(words5[randrange(len(words5))])
+        listwords.append(words4[randrange(len(words4))])
+        listwords.append(words3[randrange(len(words3))])
+        listwords.append(words3[randrange(len(words3))])
+        listwords.append(words2[randrange(len(words2))])
         print(listwords)
         self.boatAICoords={}
         boatLength = [5, 4, 3, 3, 2]
