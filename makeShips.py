@@ -28,34 +28,12 @@ class Battleships(QtGui.QWidget):
         self.grid = QtGui.QGridLayout()
         self.setLayout(self.grid)
 
-        words2=[]
-        words3=[]
-        words4=[]
-        words5=[]
-        with open('words.txt') as in_f:
-            for line in in_f:
-                woord = line.replace('\n', ' ').strip()
-                if len(woord) == 2:
-                    words2.append(woord)
-                elif len(woord) == 3:
-                    words3.append(woord)
-                elif len(woord)== 4:
-                    words4.append(woord)
-                elif len(woord) == 5:
-                    words5.append(woord)
-
-        word5 = words5[randrange(len(words5))]
-        word4 = words4[randrange(len(words4))]
-        word3 = words3[randrange(len(words3))]
-        word3_5 = words3[randrange(len(words3))]
-        word2 = words2[randrange(len(words2))]
-
         # Read QSS file for styles
         self.stylesheet = open(os.getcwd() + '/styles.qss').read()
 
         # Create a dictonairy with ships, an empty dictonairy for ships with coords and a list for the lengts of the
         # boats.
-        self.shipDic = {5: ("Aircraft Carrier", word5), 4: ("Battleship", word4), 3: ("Submarine", word3), 3.4: ("Destroyer", word3_5), 2: ("Patrol Boat", word2)}
+        self.shipDic = {5: ("Aircraft Carrier"), 4: ("Battleship"), 3: ("Submarine"), 3.4: ("Destroyer"), 2: ("Patrol Boat")}
         self.boatCoords = {}
         self.boatLengths = list(self.shipDic.keys())
         self.boatLengths.sort()
@@ -194,7 +172,28 @@ class Battleships(QtGui.QWidget):
         self.removeCoords()
 
     def makeAIShips(self):
-        """This function creates the ships for the Computer and validates them """
+        """This function creates the ships and words for the Computer and validates them """
+        words2=[]
+        words3=[]
+        words4=[]
+        words5=[]
+        with open('words.txt') as in_f:
+            for line in in_f:
+                woord = line.replace('\n', ' ').strip()
+                if len(woord) == 2:
+                    words2.append(woord)
+                elif len(woord) == 3:
+                    words3.append(woord)
+                elif len(woord)== 4:
+                    words4.append(woord)
+                elif len(woord) == 5:
+                    words5.append(woord)
+
+        word5 = words5[randrange(len(words5))]
+        word4 = words4[randrange(len(words4))]
+        word3 = words3[randrange(len(words3))]
+        word3_5 = words3[randrange(len(words3))]
+        word2 = words2[randrange(len(words2))]
         self.boatAICoords={}
         boatLength = [5, 4 ,3 ,3 ,2]
 
@@ -219,9 +218,9 @@ class Battleships(QtGui.QWidget):
                     coordsList.append((int(startX) + int(j), int(startY)))
 
             if self.checkAIboundaries(coordsList, self.boatAICoords.values()):
-                self.boatAICoords[boatLength[0]] = coordsList
+                self.boatAICoords[(boatLength[0], )] = coordsList
                 boatLength.pop(0)
-
+                print(self.boatAICoords)
         return self.boatAICoords
 
     def checkAIboundaries(self, l, dv):
