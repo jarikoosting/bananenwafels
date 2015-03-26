@@ -247,14 +247,11 @@ class Battleships(QtGui.QWidget):
         Check if coords are within the playboard.
         """
         for i in l:
-            print("i is,",i[:2])
             if (i[0] > 9) or (i[1] > 21):
                 return False
             for coords in dv:
                 for x, y, p in coords:
-                    print("x&y is:,",(x,y))
                     if (x,y) in i[:2]:
-                        print("dubbel!")
                         return False
         return True
 
