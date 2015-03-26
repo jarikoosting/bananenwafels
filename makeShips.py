@@ -194,6 +194,13 @@ class Battleships(QtGui.QWidget):
         word3 = words3[randrange(len(words3))]
         word3_5 = words3[randrange(len(words3))]
         word2 = words2[randrange(len(words2))]
+        listwords = []
+        listwords.append(word5)
+        listwords.append(word4)
+        listwords.append(word3)
+        listwords.append(word3_5)
+        listwords.append(word2)
+        print(listwords)
         self.boatAICoords={}
         boatLength = [5, 4 ,3 ,3 ,2]
 
@@ -218,7 +225,8 @@ class Battleships(QtGui.QWidget):
                     coordsList.append((int(startX) + int(j), int(startY)))
 
             if self.checkAIboundaries(coordsList, self.boatAICoords.values()):
-                self.boatAICoords[(boatLength[0], )] = coordsList
+                self.boatAICoords[(boatLength[0], listwords[0])] = coordsList
+                listwords.pop(0)
                 boatLength.pop(0)
                 print(self.boatAICoords)
         return self.boatAICoords
