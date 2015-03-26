@@ -141,13 +141,10 @@ class BSGame(QtGui.QWidget):
                 if click == el:
                     field[el].setObjectName('ShipHit')
                     field[el].setStyleSheet(self.stylesheet)
-                    indexing = coord.index(el)
-                    print(indexing)
-                    if ship[1]:
-                        woord = ship[1]
-                        print(woord)
-                    else:
-                        pass
+                    if name == "You":
+                        indexing = coord.index(el)
+                        print(indexing)
+                        print(ship[1][indexing])
                     coord.remove(el)
                     # Check if ship is destroyed after the hit
                     self.checkDestroyed(coords, name)
