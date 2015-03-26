@@ -136,17 +136,19 @@ class BSGame(QtGui.QWidget):
         # Loop through dictionary with ships and coords
         for ship, coord in coords.items():
             for el in coord:
-                length = len(coord)
-                print(length)
                 if click == el:
                     field[el].setObjectName('ShipHit')
                     field[el].setStyleSheet(self.stylesheet)
                     indexing = coord.index(el)
-                    print(indexing)
-                    if ship[1]:
+                    print("de index van de coordinaat is: ", indexing)
+                    try:
                         woord = ship[1]
-                        print(woord)
-                    else:
+                        print("Het woord dat hierbij past is:", woord)
+                        for i in woord:
+                            letter = woord[indexing +1]
+                            print(letter)
+
+                    except:
                         pass
                     coord.remove(el)
                     # Check if ship is destroyed after the hit
