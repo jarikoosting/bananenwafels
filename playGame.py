@@ -40,6 +40,8 @@ class BSGame(QtGui.QWidget):
 
         # Create label for the bot field
         self.botLabel = QtGui.QLabel('Enemy field:')
+        self.botLabel.setObjectName('EnemyFeedback')
+        self.botLabel.setStyleSheet(self.stylesheet)
 
         # Feedback with actions
         self.feedbackLabel = QtGui.QLabel('')

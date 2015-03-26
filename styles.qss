@@ -62,4 +62,8 @@
 #FeedbackLabel {
     width: 175px;
     color: red;
+    qproperty-alignment: AlignCenter;
+}
+#EnemyFeedback {
+    padding-left: 125px;
 }
