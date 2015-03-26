@@ -39,6 +39,7 @@ class StartGame(QtGui.QWidget):
                                        'border-radius: 5px; border-bottom: 4px solid #CD6839; font-size: 20px;}'
                                        'QPushButton:hover {background-color: #E87025; border-bottom: 4px solid #CD6839;}')
 
+        # Create copyright label
         self.names = QtGui.QLabel("© 2015 De Bananenwafels. Don't distribute this game. ")
         self.names.setStyleSheet('QLabel {qproperty-alignment: AlignCenter;}')
 
@@ -57,6 +58,9 @@ class StartGame(QtGui.QWidget):
         self.startButton.clicked.connect(self.start)
 
     def start(self):
+        """
+        Go to makeShips when the button is pressed
+        """
 
         # Close the window
         self.close()

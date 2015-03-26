@@ -11,7 +11,7 @@ import playGame
 class Battleships(QtGui.QWidget):
     def __init__(self):
         """
-        Constructs a Battleship game object, with which the user can play a game.
+        Constructs a view, with which the user can place his ships.
         """
         super(Battleships, self).__init__()
         self.makeAIShips()
@@ -19,7 +19,7 @@ class Battleships(QtGui.QWidget):
 
     def initUI(self):
         """
-        Constructs the UI with a 2 grids, multiple buttons and labels.
+        Constructs the UI with a grid, 3 buttons and a label.
         """
 
         #Create window and create grid layout
@@ -90,7 +90,9 @@ class Battleships(QtGui.QWidget):
         """
         self.row = y
         self.column = x
+        # Clear all buttons
         self.clearBtns()
+        # Make placed boats red again
         for l in self.boatCoords.values():
             for c in l:
                 self.colorBtn(c)
@@ -101,6 +103,7 @@ class Battleships(QtGui.QWidget):
             self.feedback.setText("Ship can't be placed here.")
             self.shipCoords = []
             return
+        # if coords are okey, then enable button and color ship coords.
         self.placeBtn.setEnabled(True)
         self.feedback.setText('')
         for i in self.shipCoords:
@@ -108,7 +111,7 @@ class Battleships(QtGui.QWidget):
 
     def generateShip(self, boatLength):
         """
-        This function generates the coordinates for every boat, depending of the length.
+        This function generates the coordinates for every boat, depending of the length of the boat.
         """
         coordsList = []
         if self.directionBtn.text() == "Horizontal":
@@ -131,8 +134,10 @@ class Battleships(QtGui.QWidget):
             if len(self.boatLengths) >= 2:
                 self.boatLengths.pop(0)
             elif len(self.boatLengths) == 1:
+                # all ships are placed, so the start game button is enabled and all other buttons are disabled.
                 self.boatLengths.pop(0)
                 self.placeBtn.setEnabled(False)
+                self.directionBtn.setEnabled(False)
                 self.startGame.setEnabled(True)
                 for b in self.btnsDict:
                     self.btnsDict[b].setEnabled(False)
@@ -143,19 +148,22 @@ class Battleships(QtGui.QWidget):
 
     def colorBtn(self, coord):
         """
-        Colors buttons red or white.
+        Colors buttons red.
         """
         self.btnsDict[coord].setObjectName('Ship')
         self.btnsDict[coord].setStyleSheet(self.stylesheet)
 
     def removeCoords(self):
+        """
+        Removes coords from list.
+        """
         for b in self.shipCoords:
             self.btnsDict[b].setObjectName('Tile')
             self.btnsDict[b].setStyleSheet(self.stylesheet)
 
     def clearBtns(self):
         """
-        Clears buttons, everything will be white again.
+        Clears all colored buttons.
         """
         for b in self.btnsDict:
             self.btnsDict[b].setObjectName('Tile')
@@ -175,6 +183,7 @@ class Battleships(QtGui.QWidget):
         """
         This function creates the ships and words for the Computer and validates them
         """
+        # First, create list with words with the same length as boat lengths.
         words2 = []
         words3 = []
         words4 = []
@@ -193,6 +202,7 @@ class Battleships(QtGui.QWidget):
                 elif len(woord) == 5:
                     words5.append(woord)
 
+        # Append 5 random words (for every boat length the same word length) which will be used in the game.
         listwords.append(words5[randrange(len(words5))])
         listwords.append(words4[randrange(len(words4))])
         listwords.append(words3[randrange(len(words3))])
@@ -223,13 +233,17 @@ class Battleships(QtGui.QWidget):
                 for j in range(boatLength[0]):
                     coordsList.append((int(startX) + int(j), int(startY), oneWord[j]))
 
-            if self.checkAIboundaries(coordsList, self.boatAICoords.values()):
+            if self.checkAIboundaries(coordsList, self.boatAICoords.values()):  # If the coords are okay, do this:
+                # pop first item from boatLength en listwords.
                 self.boatAICoords[boatLength[0]] = coordsList
                 boatLength.pop(0)
                 listwords.pop(0)
         return self.boatAICoords
 
     def checkAIboundaries(self, l, dv):
+        """
+        Check if coords are within the playboard.
+        """
         for i in l:
             if (i[0] > 9) or (i[1] > 21):
                 return False
@@ -250,13 +264,12 @@ class Battleships(QtGui.QWidget):
                 if (i, j) in coords:
                     return True
 
-
-
     def start(self):
-
+        """
+        Starts the game.
+        """
         # Close the window
         self.close()
-
         # Go to the game
         playGame.BSGame(self.boatCoords, self.makeAIShips())
 
