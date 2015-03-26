@@ -231,7 +231,6 @@ class Battleships(QtGui.QWidget):
 
             elif directionShip == "Vertical":
                 for j in range(boatLength[0]):
-                    print(j)
                     coordsList.append((int(startX) + int(j), int(startY), oneWord[j]))
 
             if self.checkAIboundaries(coordsList, self.boatAICoords.values()):  # If the coords are okay, do this:
