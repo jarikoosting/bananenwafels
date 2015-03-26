@@ -57,7 +57,6 @@ class Battleships(QtGui.QWidget):
         self.startGame.setObjectName('MenuButton')
         self.startGame.setEnabled(False)
         self.startGame.clicked.connect(self.start)
-        #self.placeAllBtn.clicked.connect(self.setAllShips)
 
         # Create label with game updates
         self.feedback = QtGui.QLabel('', self)
@@ -209,7 +208,7 @@ class Battleships(QtGui.QWidget):
         listwords.append(words3[randrange(len(words3))])
         listwords.append(words2[randrange(len(words2))])
         self.boatAICoords = {}
-        boatLength = [5, 4, 3, 3, 2]
+        boatLength = [5, 4, 3, 3.4, 2]
 
         while boatLength != []:
             coordsList = []
@@ -226,14 +225,16 @@ class Battleships(QtGui.QWidget):
             oneWord = str(listwords[0])
 
             if directionShip == "Horizontal":
-                for i in range(boatLength[0]):
+                for i in range(int(boatLength[0])):
                     coordsList.append((int(startX), int(startY) + int(i), oneWord[i]))
 
             elif directionShip == "Vertical":
-                for j in range(boatLength[0]):
+                for j in range(int(boatLength[0])):
                     coordsList.append((int(startX) + int(j), int(startY), oneWord[j]))
 
-            if self.checkAIboundaries(coordsList, self.boatAICoords.values()):  # If the coords are okay, do this:
+            if self.checkAIboundaries(coordsList, self.boatAICoords.values()):
+
+             # If the coords are okay, do this:
                 # pop first item from boatLength en listwords.
                 self.boatAICoords[boatLength[0]] = coordsList
                 boatLength.pop(0)
