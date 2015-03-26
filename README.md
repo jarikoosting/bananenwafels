@@ -2,7 +2,7 @@
 Instructies voor Zeeslag
 
 Startscherm:
-Druk op start om het spel te beginnen
+Run Battleships: voer als commando  python3.4 startGame.py in. Druk daarna op start om het spel te beginnen!
 
 Schepen plaatsen:
 Nadat er op de Start is gedrukt dien je de schepen te plaatsen. Klik op het bord om een schip te plaatsen.
