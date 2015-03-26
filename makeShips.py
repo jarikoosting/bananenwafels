@@ -184,7 +184,7 @@ class Battleships(QtGui.QWidget):
                     words2.append(woord)
                 elif len(woord) == 3:
                     words3.append(woord)
-                elif len(woord)== 4:
+                elif len(woord) == 4:
                     words4.append(woord)
                 elif len(woord) == 5:
                     words5.append(woord)
