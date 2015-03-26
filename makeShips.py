@@ -172,11 +172,11 @@ class Battleships(QtGui.QWidget):
         self.removeCoords()
 
     def makeAIShips(self):
-        """This function creates the ships and words for the Computer and validates them """
-        words2=[]
-        words3=[]
-        words4=[]
-        words5=[]
+        """
+        This function creates the ships and words for the Computer and validates them
+        """
+        words2 = words3 = words4 = words5 = []
+
         with open('words.txt') as in_f:
             for line in in_f:
                 woord = line.replace('\n', ' ').strip()
