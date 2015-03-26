@@ -214,15 +214,14 @@ class Battleships(QtGui.QWidget):
             startX = randrange(10)
             startY = randrange(12, 22)
 
-            poep = str(listwords[0])
             if directionShip == "Horizontal":
                 for i in range(boatLength[0]):
-                    coordsList.append((int(startX), int(startY) + int(i), poep[int(i)]))
+                    coordsList.append((int(startX), int(startY) + int(i), listwords[0][int(i)]))
 
             elif directionShip == "Vertical":
                 for j in range(boatLength[0]):
-                    print(j, "koekeko")
-                    coordsList.append((int(startX) + int(j), int(startY), poep[int[j]]))
+                    print(listwords[0])
+                    coordsList.append((int(startX) + int(j), int(startY), listwords[0][2]))
 
             if self.checkAIboundaries(coordsList, self.boatAICoords.values()):
                 self.boatAICoords[boatLength[0]] = coordsList
